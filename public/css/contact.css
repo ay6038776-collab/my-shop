@@ -1,0 +1,91 @@
+ .contact-container {
+        max-width: 1100px;
+        margin-top: 5rem;
+        margin-bottom: 5rem;
+    }
+    .contact-card {
+        border: none;
+        border-radius: 1.5rem; /* زوايا مستديرة أكبر */
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08); /* ظل أنيق */
+        
+    }
+    .info-section {
+        background-color: var(--bs-primary); /* استخدام اللون الأساسي للخلفية */
+        color: white;
+        padding: 3rem 2.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .info-item {
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+    }
+    .info-item i {
+        font-size: 1.5rem;
+        margin-left: 1rem;
+    }
+    .form-section {
+        padding: 3rem 2.5rem;
+    }
+    .form-section h2 {
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: #333;
+    }
+    .social-icons a {
+        color: white;
+        font-size: 1.5rem;
+        margin-left: 1rem;
+        transition: color 0.3s;
+    }
+    .social-icons a:hover {
+        color: var(--bs-warning); /* تغيير اللون عند التحويم */
+    }
+
+    .social-icons a {
+    font-size: 28px;
+    margin: 0 12px;
+    display: inline-block;
+    transition: all 0.3s ease;
+    padding: 8px;
+    border-radius: 50%;
+}
+
+/* Facebook */
+.social-icons a.facebook {
+    color: #020202; /* اللون الأصلي */
+}
+.social-icons a.facebook:hover {
+    color: #00ffff; /* سماوي */
+    box-shadow: 0 0 8px #ffffff; /* لمسة بيضاء */
+}
+
+/* Twitter */
+.social-icons a.twitter {
+    color: #000000; /* اللون الأصلي */
+}
+.social-icons a.twitter:hover {
+    color: #ffffff; /* أسمر */
+    box-shadow: 0 0 8px #ffffff;
+}
+
+/* Instagram */
+.social-icons a.instagram {
+    color: #000000; /* اللون الأصلي */
+}
+.social-icons a.instagram:hover {
+    color: #f56040; /* تغيير للهوف */
+    box-shadow: 0 0 8px #ffffff;
+}
+
+/* LinkedIn */
+.social-icons a.linkedin {
+    color: #000000; /* اللون الأصلي */
+}
+.social-icons a.linkedin:hover {
+    color: #efefef; /* تغيير للهوف */
+    box-shadow: 0 0 8px #ffffff;
+}

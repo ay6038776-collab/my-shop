@@ -1,0 +1,53 @@
+ body {
+        background: linear-gradient(135deg, #f0f4ff, #e6f7ff);
+        font-family: 'Cairo', sans-serif;
+    }
+    .card {
+        border: none;
+        border-radius: 18px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    .card-header {
+        border: none;
+        font-size: 18px;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+    .form-control, .form-select {
+        border-radius: 10px;
+        padding: 12px;
+        transition: all 0.3s ease;
+    }
+    .form-control:focus, .form-select:focus {
+        border-color: #0984e3;
+        box-shadow: 0 0 8px rgba(9,132,227,0.4);
+    }
+    .btn-custom {
+        background: linear-gradient(135deg, #00b894, #00cec9);
+        border: none;
+        border-radius: 12px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+    .btn-custom:hover {
+        background: linear-gradient(135deg, #00cec9, #00b894);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(0,184,148,0.4);
+    }
+    .btn-back {
+        background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+        border: none;
+        border-radius: 12px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+    .btn-back:hover {
+        background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(108,92,231,0.4);
+    }

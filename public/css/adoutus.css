@@ -1,0 +1,76 @@
+  :root {
+        --fade-up: fadeUp 0.8s ease forwards;
+        --fade-in: fadeIn 1s ease forwards;
+        --primary: #0d6efd; /* Blue */
+        --secondary: #6c757d; /* Gray */
+        --bg-alt: #f3f5f9; /* Light subtle background */
+    }
+
+    /* Animations (Kept the originals) */
+    @keyframes fadeUp {
+        0% { opacity: 0; transform: translateY(25px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+
+    /* General Styling */
+    h1, h2, h3 {
+        font-weight: 700;
+    }
+    .rounded-4 {
+        border-radius: 1rem !important;
+    }
+
+    /* Feature Card Style */
+    .feature-card {
+        background-color: #fff;
+        border: 1px solid #e9ecef;
+        padding: 2rem;
+        height: 100%;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background-color: var(--primary);
+        transform: translateY(-5px);
+        transition: transform 0.3s ease;
+    }
+    .feature-card:hover::before {
+        transform: translateY(0);
+    }
+    .feature-card:hover {
+        box-shadow: 0 10px 20px rgba(0,0,0,0.07);
+        transform: translateY(-3px);
+    }
+    .feature-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: var(--primary);
+    }
+
+    /* Section Separator */
+    .section-separator {
+        padding: 5rem 0;
+        border-bottom: 1px solid #e9ecef;
+    }
+    .section-separator.bg-alt {
+        background-color: var(--bg-alt);
+    }
+
+    /* Scroll reveal (Kept the originals) */
+    [data-animate] {
+        opacity: 0;
+    }
+    [data-animate="fade-up"] { animation: var(--fade-up); }
+    [data-animate="fade-in"] { animation: var(--fade-in); }
+    [data-animate="scale-in"] { animation: var(--scale-in); }

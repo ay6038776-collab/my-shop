@@ -1,0 +1,82 @@
+btn-glass-back {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: #fff;
+        font-weight: 500;
+        transition: all 0.3s;
+    }
+    .btn-glass-back:hover {
+        background: rgba(255, 255, 255, 0.3);
+        border-color: #fff;
+        color: #fff;
+        transform: translateX(-3px);
+    }
+    
+    /* Existing Styles */
+    body {
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .profile-main-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    }
+
+    .glass-tab {
+        color: rgba(255, 255, 255, 0.7);
+        text-align: left;
+        padding: 10px 15px;
+        margin-bottom: 8px;
+        border-radius: 50px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        border-left: 5px solid transparent;
+        font-weight: 500;
+    }
+
+    .glass-tab:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.2);
+        border-left: 5px solid #007bff;
+    }
+
+    .glass-tab.active {
+        color: #fff;
+        background: rgba(0, 123, 255, 0.5);
+        border-left: 5px solid #fff;
+    }
+
+    .input-glass {
+        background: rgba(255, 255, 255, 0.25);
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .input-glass::placeholder { color: rgba(255, 255, 255, 0.5); }
+    .input-glass:focus {
+        background: rgba(255, 255, 255, 0.35);
+        box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+        outline: none;
+        color: #fff;
+    }
+
+    .btn-glass {
+        background: rgba(0, 123, 255, 0.7);
+        backdrop-filter: blur(10px);
+        border: none;
+        font-weight: 600;
+        transition: all 0.3s;
+        color: #fff;
+    }
+    .btn-glass:hover {
+        background: rgba(0, 123, 255, 0.9);
+        transform: scale(1.02);
+        color: #fff;
+    }
+
+    .text-primary { color: #8ab4f8 !important; }
+    .text-light { color: #f8f9fa !important; }

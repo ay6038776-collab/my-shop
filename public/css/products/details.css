@@ -1,0 +1,90 @@
+   /* 💎 NEW PREMIUM CSS STYLES */
+    :root {
+        --primary-color: #004d40; /* Emerald Dark Green */
+        --accent-color: #ffc107; /* Gold/Amber */
+        --bg-light-alt: #f9f9f9;
+        --text-dark: #212529;
+    }
+
+    /* General Layout */
+    .product-details-container {
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+    }
+
+    /* Image Section */
+    .product-image-card {
+        height: 480px; /* زيادة الارتفاع قليلاً */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg-light-alt);
+        padding: 1.5rem;
+        transition: box-shadow 0.4s ease;
+    }
+    .product-image-card:hover {
+        box-shadow: 0 15px 40px rgba(0, 77, 64, 0.15) !important; /* ظل مرتبط باللون الأساسي */
+    }
+    .product-image-card img {
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+        transition: transform 0.4s ease;
+    }
+    .product-image-card:hover img {
+        transform: scale(1.03);
+    }
+    
+    /* Discount Badge */
+    .badge-discount {
+        background-color: var(--accent-color) !important;
+        color: var(--text-dark);
+        font-weight: bold;
+    }
+
+    /* Colors Options */
+    .color-box { 
+        width: 40px; 
+        height: 40px; 
+        border-radius: 50%; /* دائري */
+        cursor: pointer; 
+        border: 2px solid transparent; 
+        transition: 0.3s; 
+    }
+    .selected-color { 
+        border: 4px solid var(--accent-color); /* تحديد اللون بالذهبي */
+        transform: scale(1.15); 
+        box-shadow: 0 0 8px rgba(255, 193, 7, 0.5);
+    }
+
+    /* Price */
+    .text-main-price {
+        color: var(--primary-color) !important;
+        font-size: 2.2rem;
+    }
+    
+    /* Buttons */
+    .btn-gradient-new {
+        background: var(--primary-color); /* لون أساسي ثابت بدلاً من التدرج الأزرق */
+        border: none;
+        color: #fff !important;
+        transition: all 0.4s ease;
+    }
+    .btn-gradient-new:hover {
+        background: #00897b; /* تدرج أفتح قليلاً عند التحويم */
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 0 8px 15px rgba(0, 77, 64, 0.3);
+    }
+
+    .btn-outline-custom {
+        border: 2px solid var(--primary-color);
+        color: var(--primary-color);
+        transition: all 0.4s ease;
+    }
+    .btn-outline-custom:hover {
+        background: var(--primary-color);
+        color: #fff !important;
+        transform: scale(1.02);
+    }
+
+    

@@ -1,0 +1,67 @@
+/* ===== Body Background ===== */
+body { 
+    background-color: #f4f7f6; 
+}
+
+/* ===== الدائرة الصغيرة للون ===== */
+.color-circle { 
+    width: 20px; 
+    height: 20px; 
+    display: inline-block; 
+    border-radius: 50%; 
+    border: 1px solid #ddd; 
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+/* ===== ألوان المنتج الافتراضية ===== */
+.color-white  { background-color: white; border: 1px solid #ccc; }
+.color-black  { background-color: black; }
+.color-red    { background-color: red; }
+.color-blue   { background-color: blue; }
+.color-green  { background-color: green; }
+.color-yellow { background-color: yellow; }
+
+/* ===== لون مختار ===== */
+.selected-color {
+    border: 2px solid #000; /* يوضح اللون المختار */
+    transform: scale(1.1);  /* يكبره شوية عشان يبرز */
+}
+
+/* ===== إذا استخدمت الدائرة في Cart ===== */
+.cart-item .color-circle {
+    margin-right: 6px;
+}
+
+/* ===== Hover Effect ===== */
+.color-circle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 3px rgba(0,0,0,0.3);
+}
+
+/* ===== ألوان إضافية لكل الألوان اللي عرفناها ===== */
+.color-circle.black { background-color: black; }
+.color-circle.red { background-color: red; }
+.color-circle.blue { background-color: blue; }
+.color-circle.green { background-color: green; }
+.color-circle.yellow { background-color: yellow; }
+.color-circle.white { background-color: white; border: 1px solid #ccc; }
+.color-circle.pink { background-color: pink; }
+.color-circle.purple { background-color: purple; }
+.color-circle.orange { background-color: orange; }
+.color-circle.gray { background-color: gray; }
+.color-circle.light-purple { background-color: #b19cd9; }
+.color-circle.turquoise { background-color: #40e0d0; }  
+.color-circle.brown { background-color: #a52a2a; }
+.color-circle.beige { background-color: #f5f5dc; }
+.color-circle.transparent { background-color: transparent; }
+.color-circle.navy { background-color: #000080; }
+.color-circle.lavender { background-color: #e6e6fa; }
+.color-circle.olive { background-color: #808000; }
+.color-circle.silver { background-color: #c0c0c0; }
+.color-circle.gold { background-color: #ffd700; }
+.color-circle.maroon { background-color: #800000; }
+.color-circle.cream { background-color: #fffdd0; }
+.color-circle.turquoise { background-color: #40e0d0; }
+.color-circle.indigo { background-color: #4b0082; }
+.color-circle.amber { background-color: #ffbf00; }

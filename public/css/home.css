@@ -1,0 +1,85 @@
+ 
+ :root {
+        --color-primary: #007bff; /* Primary Action Color (Blue) */
+        --color-dark-accent: #343a40; /* Dark text/button border color */
+        --color-price: #dc3545; /* Red for Price/Discount */
+        --color-clock-bg: #1f2d3d; /* Dark subtle clock background */
+    }
+
+    /* CLOCK STYLE */
+    .clock-style {
+        background: var(--color-clock-bg);
+        color: #00ffc8; /* Neon effect */
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 255, 200, 0.2);
+        font-family: 'Monospace', sans-serif;
+        letter-spacing: 3px;
+    }
+
+    /* TYPOGRAPHY */
+    .text-dark-accent {
+        color: var(--color-dark-accent) !important;
+    }
+    .text-main-price {
+        color: var(--color-price) !important;
+        font-size: 1.5rem !important; /* Bigger price */
+    }
+
+    /* PRODUCT CARD */
+    .clean-product-card {
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        background: #ffffff;
+        border: 1px solid #e9ecef !important;
+    }
+    .clean-product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15) !important;
+    }
+    .product-image-container {
+        height: 180px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f8f9fa;
+        overflow: hidden;
+    }
+    .product-image-container img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover; /* لضمان تغطية الصورة للمساحة */
+        transition: transform 0.4s ease;
+    }
+    .clean-product-card:hover .product-image-container img {
+        transform: scale(1.05);
+    }
+    
+    /* PROGRESS BAR */
+    .simple-progress {
+        height: 8px; /* شريط أرفع */
+        border-radius: 4px;
+        background: #e9ecef;
+        overflow: hidden;
+    }
+    .progress-discount-bar {
+        background-color: var(--color-price); /* استخدام لون السعر للتناسق */
+        transition: width 0.6s ease-in-out;
+    }
+    
+    /* BUTTONS */
+    .btn-outline-dark-accent {
+        color: var(--color-dark-accent);
+        border-color: var(--color-dark-accent);
+    }
+    .btn-outline-dark-accent:hover {
+        background-color: var(--color-dark-accent);
+        color: white;
+        border-color: var(--color-dark-accent);
+    }
+    .hover-scale {
+        transition: transform 0.3s ease;
+    }
+    .hover-scale:hover {
+        transform: scale(1.05);
+    }
