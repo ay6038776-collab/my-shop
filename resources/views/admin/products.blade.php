@@ -276,12 +276,30 @@ input[type="checkbox"] {
           <td>{{ $product->name }}</td>
           <td>${{ number_format($product->price, 2) }}</td>
           <td>
-            @if($product->img)
-              <img src="{{ asset('img/' . $product->img) }}" alt="{{ $product->name }}" class="product-img">
-            @else
-              <span class="text-muted">No image</span>
-            @endif
-          </td>
+    @php
+        $imagePath = null;
+
+        if($product->img){
+            // لو الصورة JSON (أكثر من صورة)
+            $decodedImages = json_decode($product->img, true);
+            if(is_array($decodedImages) && count($decodedImages)){
+                $imagePath = $decodedImages[0]; // أول صورة
+            } else {
+                $imagePath = $product->img; // نص عادي
+            }
+        }
+
+        // التأكد من وجود الصورة في المسارات
+        if($imagePath && file_exists(public_path('storage/' . $imagePath))){
+            $imagePath = asset('storage/' . $imagePath);
+        } elseif($imagePath && file_exists(public_path('img/' . $imagePath))){
+            $imagePath = asset('img/' . $imagePath);
+        } else {
+            $imagePath = 'https://via.placeholder.com/100x100?text=No+Image';
+        }
+    @endphp
+    <img src="{{ $imagePath }}" alt="{{ $product->name }}" class="product-img">
+</td>
           <td>{{ Str::limit($product->description, 60) }}</td>
           <td>{{ $product->stock }}</td>
           <td>{{ $product->sku }}</td>

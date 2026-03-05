@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 13, 2026 at 07:02 PM
+-- Generation Time: Feb 16, 2026 at 06:13 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -129,14 +129,6 @@ CREATE TABLE `complaints` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `complaints`
---
-
-INSERT INTO `complaints` (`id`, `name`, `email`, `subject`, `message`, `created_at`, `updated_at`) VALUES
-(13, 'Ahmed', 'ay603877ea@gmail.com', 'products', 'I love You❤️❤️❤️❤️', '2025-12-24 17:57:53', '2025-12-24 17:57:53'),
-(14, 'Ahmed', 'ay603877ea@gmail.com', 'products', 'Greetings. I am Ahmed.', '2026-01-07 12:23:17', '2026-01-07 12:23:17');
-
 -- --------------------------------------------------------
 
 --
@@ -163,7 +155,47 @@ INSERT INTO `customers` (`id`, `name`, `email`, `password`, `phone`, `address`, 
 (2, 'mohed', 'mohmed@gmail.com', '$2y$12$GlBJDEzaCoYH.1oWwfeNCO5Lg7pgrHRAknfLNcp8hBr3TegwuY/0i', NULL, NULL, '2025-10-13 15:11:13', '2025-10-15 16:08:09'),
 (3, 'Ahmed', 'ay603877ea@gmail.com', '$2y$12$zD5.e39YMq0WgtudlrtM.OnSRXUHtOsCRowktQmgFUgznMxSEqcqu', NULL, NULL, '2025-10-20 16:53:34', '2025-10-20 16:53:34'),
 (4, 'Silma', 'silam@gmail.com', '$2y$12$dg./We0KSkZxKKj5FKIkmefz7UMBgxtx0VByP3gmDfCM40YbYni8a', NULL, NULL, '2025-10-23 09:05:20', '2025-10-23 09:05:20'),
-(5, 'AHMED', 'ahmed45@gmail.com', '$2y$12$JE5qVvdM2J6UUZ8OF1vPVuUfxp9hvPIT0ujLpCChsI5eL9SK5I.Bi', NULL, NULL, '2026-01-01 15:35:02', '2026-01-01 15:35:44');
+(5, 'AHMED', 'ahmed45@gmail.com', '$2y$12$JE5qVvdM2J6UUZ8OF1vPVuUfxp9hvPIT0ujLpCChsI5eL9SK5I.Bi', NULL, NULL, '2026-01-01 15:35:02', '2026-01-01 15:35:44'),
+(6, 'Ahmed', 'ahmed9@gmail.com', '$2y$12$VThuCWu2MWgvRmdg198fO.plH4HhQhIAgOXzpum/4x1eAc0vKwWIS', NULL, NULL, '2026-01-14 06:30:35', '2026-01-24 09:39:45'),
+(7, 'Mohmed', 'mohmed4@gmail.com', '$2y$12$niRnspPfvour0SD73FZBzejUNd34CvAhJJ2I0EykZibHhj.XFKf0K', NULL, NULL, '2026-01-22 16:31:28', '2026-01-22 16:31:28'),
+(8, 'Mohmed', 'mohmed10@gmail.com', '$2y$12$XT.ithM5DCMGFBIpksWcHu7mVynAZ4ijkywOuztKUEO5m./kiT2.u', NULL, NULL, '2026-02-04 18:14:02', '2026-02-04 18:14:02'),
+(9, 'Salma', 'salma123@gmail.com', '$2y$12$tzlSnaEuy5WLC9zYoLMUoeIBKzf2Jhi0/eowtJRYqAw6yzMHE.E8u', NULL, NULL, '2026-02-06 17:06:24', '2026-02-06 17:06:24'),
+(10, 'Salma', 'salma9@gmail.com', '$2y$12$shWutUDEOsQuKysIoHjVHeLn9MYky8Yws6mu.KgPRHUVLuwTl8Ph.', NULL, NULL, '2026-02-09 13:48:32', '2026-02-09 13:48:32');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employees`
+--
+
+CREATE TABLE `employees` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `phone` varchar(50) DEFAULT NULL,
+  `daily_hours` int(11) NOT NULL DEFAULT 8,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `employees`
+--
+
+INSERT INTO `employees` (`id`, `name`, `email`, `phone`, `daily_hours`, `created_at`, `updated_at`) VALUES
+(1, 'ahmed', 'ahmed9@gmail.com', NULL, 9, '2026-01-19 22:07:48', '2026-01-19 22:07:48'),
+(2, 'ahmed', 'ahmed8@gmail.com', NULL, 9, '2026-01-19 23:05:18', '2026-01-19 23:05:18');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_role`
+--
+
+CREATE TABLE `employee_role` (
+  `employee_id` bigint(20) UNSIGNED NOT NULL,
+  `role_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -248,7 +280,12 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (13, '2025_10_20_182913_create_order_items_table', 9),
 (14, '2025_10_20_170544_create_orders_table', 10),
 (15, '2025_11_07_113651_create_admins_table', 11),
-(16, '2025_12_19_185421_create_notifications_table', 11);
+(16, '2025_12_19_185421_create_notifications_table', 11),
+(17, '2026_01_18_142146_create_ratings_table', 12),
+(18, '2026_01_19_195826_create_employees_table', 13),
+(19, '2026_01_19_195855_create_roles_table', 13),
+(20, '2026_01_19_195929_create_employee_role_table', 13),
+(21, '2026_01_19_202330_create_role_user_table', 14);
 
 -- --------------------------------------------------------
 
@@ -350,9 +387,23 @@ INSERT INTO `orders` (`id`, `customer_id`, `order_number`, `total_price`, `statu
 (64, 5, 'ORD-6956b0f2bd4cc', 190400.00, 'approved', NULL, '2026-01-01 15:37:54', '2026-01-01 15:38:56', NULL, 0),
 (65, 5, 'ORD-695b278edce6a', 267000.00, 'approved', NULL, '2026-01-05 00:53:02', '2026-01-05 02:21:28', NULL, 0),
 (66, 5, 'ORD-696551cd52af1', 320000.00, 'approved', NULL, '2026-01-12 17:55:57', '2026-01-12 17:56:09', NULL, 0),
-(67, 5, 'ORD-69656b0d6c851', 60000.00, 'pending', NULL, '2026-01-12 19:43:41', '2026-01-12 19:43:41', '2026-01-19 21:43:41', 0),
-(68, 5, 'ORD-69663147e03f2', 7500.00, 'pending', NULL, '2026-01-13 09:49:27', '2026-01-13 09:49:28', '2026-01-20 11:49:27', 0),
-(69, 5, 'ORD-696636f8da155', 60000.00, 'pending', NULL, '2026-01-13 10:13:44', '2026-01-13 10:13:44', '2026-01-20 12:13:44', 0);
+(67, 5, 'ORD-69656b0d6c851', 60000.00, 'rejected', NULL, '2026-01-12 19:43:41', '2026-01-16 16:44:43', NULL, 0),
+(68, 5, 'ORD-69663147e03f2', 7500.00, 'approved', NULL, '2026-01-13 09:49:27', '2026-01-15 14:36:40', NULL, 0),
+(69, 5, 'ORD-696636f8da155', 60000.00, 'approved', NULL, '2026-01-13 10:13:44', '2026-01-15 14:36:35', NULL, 0),
+(70, 6, 'ORD-69675482cce67', 348000.00, 'approved', NULL, '2026-01-14 06:32:02', '2026-01-14 06:32:14', NULL, 0),
+(71, 6, 'ORD-696918c4587d1', 947400.00, 'approved', NULL, '2026-01-15 14:41:40', '2026-01-15 14:42:34', NULL, 0),
+(72, 6, 'ORD-696a86a54d9e3', 250000.00, 'approved', NULL, '2026-01-16 16:42:45', '2026-01-16 16:43:37', NULL, 0),
+(73, 6, 'ORD-696cfd36be882', 3600.00, 'approved', NULL, '2026-01-18 13:33:10', '2026-01-19 18:42:07', NULL, 0),
+(74, 6, 'ORD-696d3d0c29850', 700800.00, 'approved', NULL, '2026-01-18 18:05:32', '2026-01-19 18:42:01', NULL, 0),
+(75, 6, 'ORD-696e53dd2b589', 420000.00, 'approved', NULL, '2026-01-19 13:55:09', '2026-01-19 18:42:10', NULL, 0),
+(76, 6, 'ORD-696e96e811091', 270000.00, 'approved', NULL, '2026-01-19 18:41:12', '2026-01-19 18:41:34', NULL, 0),
+(77, 6, 'ORD-696fe4fc3b222', 900.00, 'approved', NULL, '2026-01-20 18:26:36', '2026-01-20 18:31:53', NULL, 0),
+(78, 6, 'ORD-6970fd0fa0b09', 20600.00, 'approved', NULL, '2026-01-21 14:21:35', '2026-01-21 14:22:26', NULL, 0),
+(79, 6, 'ORD-697228e81bb95', 300.00, 'approved', NULL, '2026-01-22 11:40:56', '2026-01-22 11:41:38', NULL, 0),
+(80, 7, 'ORD-6972851562df9', 270000.00, 'rejected', NULL, '2026-01-22 18:14:13', '2026-02-04 18:41:26', NULL, 0),
+(81, 6, 'ORD-6974a39772b1a', 360000.00, 'approved', NULL, '2026-01-24 08:48:55', '2026-01-24 08:59:08', NULL, 0),
+(82, 8, 'ORD-6983aee613139', 22500.00, 'approved', NULL, '2026-02-04 18:41:10', '2026-02-04 18:41:17', NULL, 0),
+(83, 10, 'ORD-698a0348cd023', 15000.00, 'approved', NULL, '2026-02-09 13:54:48', '2026-02-09 13:55:13', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -536,7 +587,39 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`, `price`, 
 (158, 66, 81, 4, 80000.00, 'زهري', '2026-01-12 17:55:57', '2026-01-12 17:55:57'),
 (159, 67, 16, 1, 60000.00, 'أخضر', '2026-01-12 19:43:41', '2026-01-12 19:43:41'),
 (160, 68, 12, 1, 7500.00, 'ذهبي', '2026-01-13 09:49:27', '2026-01-13 09:49:27'),
-(161, 69, 16, 1, 60000.00, 'أصفر', '2026-01-13 10:13:44', '2026-01-13 10:13:44');
+(161, 69, 16, 1, 60000.00, 'أصفر', '2026-01-13 10:13:44', '2026-01-13 10:13:44'),
+(162, 70, 82, 4, 87000.00, 'أحمر', '2026-01-14 06:32:02', '2026-01-14 06:32:02'),
+(163, 71, 66, 4, 600.00, 'أسود', '2026-01-15 14:41:40', '2026-01-15 14:41:40'),
+(164, 71, 19, 5, 70000.00, 'عنابي', '2026-01-15 14:41:40', '2026-01-15 14:41:40'),
+(165, 71, 34, 4, 30000.00, 'بني', '2026-01-15 14:41:40', '2026-01-15 14:41:40'),
+(166, 71, 46, 4, 700.00, 'بيج', '2026-01-15 14:41:40', '2026-01-15 14:41:40'),
+(167, 71, 24, 7, 60000.00, 'ذهبي', '2026-01-15 14:41:40', '2026-01-15 14:41:40'),
+(168, 71, 39, 6, 7000.00, 'أبيض', '2026-01-15 14:41:40', '2026-01-15 14:41:40'),
+(169, 71, 56, 3, 1000.00, 'كهرماني', '2026-01-15 14:41:40', '2026-01-15 14:41:40'),
+(170, 71, 47, 4, 300.00, 'أحمر', '2026-01-15 14:41:40', '2026-01-15 14:41:40'),
+(171, 71, 54, 5, 900.00, 'رمادي', '2026-01-15 14:41:40', '2026-01-15 14:41:40'),
+(172, 71, 78, 5, 300.00, 'أسود', '2026-01-15 14:41:40', '2026-01-15 14:41:40'),
+(173, 72, 74, 5, 50000.00, 'رمادي', '2026-01-16 16:42:45', '2026-01-16 16:42:45'),
+(174, 73, 52, 3, 1200.00, 'أسود', '2026-01-18 13:33:10', '2026-01-18 13:33:10'),
+(175, 74, 82, 2, 87000.00, 'أزرق', '2026-01-18 18:05:32', '2026-01-18 18:05:32'),
+(176, 74, 82, 2, 87000.00, 'كحلي', '2026-01-18 18:05:32', '2026-01-18 18:05:32'),
+(177, 74, 82, 4, 87000.00, 'أحمر', '2026-01-18 18:05:32', '2026-01-18 18:05:32'),
+(178, 74, 83, 4, 600.00, 'أزرق', '2026-01-18 18:05:32', '2026-01-18 18:05:32'),
+(179, 74, 52, 1, 1200.00, 'أسود', '2026-01-18 18:05:32', '2026-01-18 18:05:32'),
+(180, 74, 52, 1, 1200.00, 'أزرق', '2026-01-18 18:05:32', '2026-01-18 18:05:32'),
+(181, 75, 16, 4, 60000.00, 'كهرماني', '2026-01-19 13:55:09', '2026-01-19 13:55:09'),
+(182, 75, 16, 1, 60000.00, 'أحمر', '2026-01-19 13:55:09', '2026-01-19 13:55:09'),
+(183, 75, 16, 2, 60000.00, 'أصفر', '2026-01-19 13:55:09', '2026-01-19 13:55:09'),
+(184, 76, 84, 3, 90000.00, 'برتقالي', '2026-01-19 18:41:12', '2026-01-19 18:41:12'),
+(185, 77, 88, 1, 300.00, 'أحمر', '2026-01-20 18:26:36', '2026-01-20 18:26:36'),
+(186, 77, 20, 1, 600.00, 'أسود', '2026-01-20 18:26:36', '2026-01-20 18:26:36'),
+(187, 78, 88, 2, 300.00, 'أسود', '2026-01-21 14:21:35', '2026-01-21 14:21:35'),
+(188, 78, 89, 1, 20000.00, 'أبيض', '2026-01-21 14:21:35', '2026-01-21 14:21:35'),
+(189, 79, 88, 1, 300.00, 'أزرق', '2026-01-22 11:40:56', '2026-01-22 11:40:56'),
+(190, 80, 84, 3, 90000.00, 'ذهبي', '2026-01-22 18:14:13', '2026-01-22 18:14:13'),
+(191, 81, 84, 4, 90000.00, 'برتقالي', '2026-01-24 08:48:55', '2026-01-24 08:48:55'),
+(192, 82, 92, 3, 7500.00, 'بني', '2026-02-04 18:41:10', '2026-02-04 18:41:10'),
+(193, 83, 12, 2, 7500.00, 'أحمر', '2026-02-09 13:54:48', '2026-02-09 13:54:48');
 
 -- --------------------------------------------------------
 
@@ -591,12 +674,12 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `description`, `price`, `is_new`, `stock`, `sku`, `discount_percentage`, `category_id`, `created_at`, `updated_at`, `img`) VALUES
-(12, 'realme C65', 'cooler gold \r\ncamera 64px\r\nDisplay 90HZ', 7500.00, 0, 1464, '1', 0, NULL, '2025-09-12 03:57:29', '2025-12-30 01:14:31', '1757660249.png'),
-(16, 'lap-45', 'camera 20px', 60000.00, 0, 993, '2', 0, NULL, '2025-09-12 06:25:44', '2026-01-05 02:21:28', '1757669144.png'),
+(12, 'realme C65', 'cooler gold \r\ncamera 64px\r\nDisplay 90HZ', 7500.00, 0, 1461, '1', 0, NULL, '2025-09-12 03:57:29', '2026-02-09 13:55:13', '[\"1769114246_69728a86dc8a7.jpg\",\"1769114246_69728a86dd48b.png\",\"1769114246_69728a86de99b.jpg\"]'),
+(16, 'lap-45', 'camera 20px', 60000.00, 0, 985, '2', 0, NULL, '2025-09-12 06:25:44', '2026-01-20 16:40:47', '[\"1768934447_696fcc2f5a59b.png\"]'),
 (17, 'lap-45', '\"\"La...\"\"', 17000.00, 0, 56, '3', 0, NULL, '2025-09-22 15:22:05', '2025-12-31 18:24:21', '1758565325.png'),
-(19, 'appel', 'camera14px', 70000.00, 0, 47, '45%', 0, NULL, '2025-09-23 07:02:29', '2025-12-22 15:40:51', '1758621749.jpg'),
-(20, 'Backpack', 'Brow', 600.00, 0, 998, '8%', 0, NULL, '2025-09-23 07:03:11', '2025-12-22 15:36:31', '1758621791.jpg'),
-(24, 'Samsung s24 ultr', 'camera 200px', 60000.00, 0, 1884, '9%', 0, NULL, '2025-09-23 17:59:25', '2025-12-22 15:40:51', '1758661165.jpg'),
+(19, 'appel', 'camera14px', 70000.00, 0, 42, '45%', 0, NULL, '2025-09-23 07:02:29', '2026-01-15 14:42:34', '1758621749.jpg'),
+(20, 'Backpack', 'Brow', 600.00, 0, 997, '8%', 0, NULL, '2025-09-23 07:03:11', '2026-01-20 18:31:53', '1758621791.jpg'),
+(24, 'Samsung s24 ultr', 'camera 200px', 60000.00, 0, 1877, '9%', 0, NULL, '2025-09-23 17:59:25', '2026-01-15 14:42:34', '1758661165.jpg'),
 (25, 'realme', 'camera100px', 6000.00, 0, 1989, '3%', 0, NULL, '2025-09-24 09:27:02', '2025-12-30 01:22:38', '1758716822.jpg'),
 (26, 'lap-45', 'color b', 8000.00, 0, 8, '7', 0, NULL, '2025-09-24 10:05:57', '2025-12-22 15:36:31', '1758719157.png'),
 (27, 'realme c6', 'camera 50px', 4000.00, 0, 8, '0267', 0, NULL, '2025-09-24 10:14:58', '2025-12-30 01:23:24', '1758719698.jpg'),
@@ -604,40 +687,95 @@ INSERT INTO `products` (`id`, `name`, `description`, `price`, `is_new`, `stock`,
 (31, 'realmec50 not', 'camera 64px', 9000.00, 0, 997, '19', 0, NULL, '2025-09-26 05:38:07', '2025-12-22 15:38:23', '1758875887.jpg'),
 (32, 'realme C65', 'camera 50px', 10000.00, 0, 75, '20%', 0, NULL, '2025-09-26 06:27:48', '2025-12-22 15:36:31', '1758878868.png'),
 (33, 'realme C65', 'jhfddjh/', 10000.00, 0, 67, '21%', 0, NULL, '2025-09-28 09:02:00', '2025-12-22 15:36:31', '1759060920.png'),
-(34, 'apple 13 pro max', 'camera 64px', 30000.00, 0, 5, '30', 0, NULL, '2025-09-29 11:01:15', '2025-12-22 15:36:31', '1759154475.jpg'),
+(34, 'apple 13 pro max', 'camera 64px', 30000.00, 0, 1, '30', 0, NULL, '2025-09-29 11:01:15', '2026-01-15 14:42:34', '1759154475.jpg'),
 (35, 'Samsung s24 ultr', 'camera 200px', 80000.00, 0, 6, '4', 0, NULL, '2025-09-30 14:43:09', '2025-12-22 15:36:31', '1759254189.png'),
 (37, 'apple 15 pro max', 'camera 40px', 50000.00, 0, 66, '10', 0, NULL, '2025-09-30 15:51:08', '2025-12-22 15:38:23', '1759258268.jpg'),
-(39, 'realme C65', 'camera', 7000.00, 1, 28, 'ps', 0, NULL, '2025-09-30 16:05:33', '2026-01-05 02:21:28', '1759259133.jpg'),
+(39, 'realme C65', 'camera', 7000.00, 1, 22, 'ps', 0, NULL, '2025-09-30 16:05:33', '2026-01-15 14:42:34', '1759259133.jpg'),
 (40, 'watch', 'color blake', 700.00, 1, 55, '6', 0, NULL, '2025-09-30 16:17:59', '2025-12-22 15:36:31', '1759259879.jpg'),
 (42, 'Computer', 'RTX:4060', 50000.00, 1, 487, '5', 0, NULL, '2025-10-01 17:44:32', '2025-12-22 15:36:31', '1759351472.jpg'),
 (44, 'apple 13', 'camera 50px', 40000.00, 1, 72, '20', 0, NULL, '2025-10-09 17:48:04', '2025-12-22 15:36:31', '1760042884.jpg'),
 (45, 'oppo', 'camera', 9000.00, 1, 698, '60', 0, NULL, '2025-10-09 18:02:36', '2025-12-22 15:36:31', '1760043756.jpg'),
-(46, 'watch', 'black', 700.00, 1, 987, '90', 0, NULL, '2025-10-13 15:59:54', '2025-12-22 15:41:02', '1760381994.jpg'),
-(47, 'T-shirt', 'color :Gray', 300.00, 1, 795, '000', 0, NULL, '2025-10-18 18:00:17', '2025-12-24 14:54:34', '1760821217.jpg'),
+(46, 'watch', 'black', 700.00, 1, 983, '90', 0, NULL, '2025-10-13 15:59:54', '2026-01-15 14:42:34', '1760381994.jpg'),
+(47, 'T-shirt', 'color :Gray', 300.00, 1, 791, '000', 0, NULL, '2025-10-18 18:00:17', '2026-01-15 14:42:34', '1760821217.jpg'),
 (48, 'Backpack', 'color blak', 1000.00, 1, 94, '40', 0, NULL, '2025-10-20 10:58:40', '2025-12-22 15:41:10', '1760968720.jpg'),
 (50, 'shoos', 'color: bleak', 300.00, 1, 691, '7%', 0, NULL, '2025-10-22 19:37:58', '2025-12-22 15:38:07', '1761172678.jpg'),
-(52, 'dreas', 'prefect', 1200.00, 1, 5999, '8', 0, NULL, '2025-10-23 08:52:47', '2025-12-22 15:36:31', '1761220367.jpg'),
-(54, 'jacket', 'color bone', 900.00, 1, 7999, '5%', 0, NULL, '2025-10-23 08:54:36', '2025-12-22 15:36:31', '1761220476.jpg'),
-(56, 'Back', 'color ramde', 1000.00, 1, 296, '90$', 0, NULL, '2025-10-23 08:57:04', '2025-12-22 15:37:12', '1761220624.jpg'),
+(52, 'dreas', 'prefect', 1200.00, 1, 5994, '8', 0, NULL, '2025-10-23 08:52:47', '2026-01-19 18:42:07', '1761220367.jpg'),
+(54, 'jacket', 'color bone', 900.00, 1, 7994, '5%', 0, NULL, '2025-10-23 08:54:36', '2026-01-15 14:42:34', '1761220476.jpg'),
+(56, 'Back', 'color ramde', 1000.00, 1, 293, '90$', 0, NULL, '2025-10-23 08:57:04', '2026-01-15 14:42:34', '1761220624.jpg'),
 (57, 'shoos', 'color: wait', 800.00, 1, 495, '00', 0, NULL, '2025-10-23 10:26:43', '2025-12-30 01:04:46', '1761226003.jpg'),
 (58, 'glass', 'sun glass', 1000.00, 1, 3997, '89', 0, NULL, '2025-10-23 10:29:46', '2025-12-22 15:37:12', '1761226186.jpg'),
 (59, 'apple 13 pro max', 'camera : 50px', 30000.00, 1, 56, '09', 0, NULL, '2025-11-04 15:23:12', '2025-12-22 15:36:56', '1762276992.jpg'),
 (61, 'T-shirt', 'color : wait', 400.00, 1, 596, '80', 0, NULL, '2025-11-11 09:28:11', '2025-12-22 15:36:31', '1762860491.jpg'),
 (63, 'watch', 'color Brown', 1000.00, 1, 394, '6$', 0, NULL, '2025-11-18 07:19:44', '2025-12-22 15:35:19', '1763457584.jpg'),
 (64, 'mocap', 'Roge\r\nPrevue\r\nlegalese', 4000.00, 1, 7995, '60$', 0, NULL, '2025-11-26 12:43:44', '2025-12-22 15:34:05', '1764168224.jpg'),
-(66, 'pantaloon', 'Howa pantaloon morays \r\nmen hadal al Shereka .\r\ncolor : below', 600.00, 1, 2996, '7$', 0, NULL, '2025-12-09 15:07:20', '2025-12-22 15:31:13', '1765300040.jpg'),
+(66, 'pantaloon', 'Howa pantaloon morays \r\nmen hadal al Shereka .\r\ncolor : below', 600.00, 1, 2992, '7$', 0, NULL, '2025-12-09 15:07:20', '2026-01-15 14:42:34', '1765300040.jpg'),
 (67, 'Samsung s23', 'camera 200px', 50000.00, 1, 5898, '2$', 0, NULL, '2025-12-13 22:21:23', '2025-12-30 01:19:04', '1765671683.jpg'),
 (68, 'T-shirt', 'T-shirt sport', 1000.14, 1, 595, '#3', 10, NULL, '2025-12-20 20:46:28', '2025-12-26 18:07:38', '1766270788.jpg'),
 (69, 'Bird', 'PET BIRD', 1001.00, 1, 197, 'jhj', 8, NULL, '2025-12-24 14:39:52', '2025-12-31 18:53:54', '1766594392.png'),
 (71, 'apple 13', 'ggl', 17000.00, 1, 53, '2006', 6, NULL, '2025-12-24 15:12:19', '2025-12-31 18:53:54', '1766596339.jpg'),
 (73, 'watch', 'color white', 6000.00, 1, 393, 'asd', 9, NULL, '2025-12-26 17:48:33', '2026-01-01 15:38:56', '1766778513.jpg'),
-(74, 'Computer pc', 'computer pc', 50000.00, 1, 63, 'cty', 20, NULL, '2025-12-31 16:52:55', '2026-01-01 15:38:56', '1767207175.jpg'),
+(74, 'Computer pc', 'computer pc', 50000.00, 1, 58, 'cty', 20, NULL, '2025-12-31 16:52:55', '2026-01-16 16:43:37', '1767207175.jpg'),
 (75, 'jacket', 'kkldj', 800.00, 1, 197, 'kji', 2, NULL, '2025-12-31 18:59:44', '2026-01-01 15:38:56', '1767214784.jpg'),
 (76, 'Backpack', 'hjd', 3000.00, 1, 890, 'pou', 3, NULL, '2025-12-31 19:01:34', '2025-12-31 19:01:46', '1767214894.jpg'),
 (77, 'apple 13', 'ooroe', 40000.00, 1, 795, '1869', 4, NULL, '2025-12-31 19:03:06', '2026-01-05 02:21:28', '1767214986.jpg'),
-(78, 'T-shirt', 'ijfi', 300.00, 1, 896, 'jhue', 6, NULL, '2025-12-31 19:05:21', '2026-01-05 02:25:02', '1767215121.jpg'),
+(78, 'T-shirt', 'ijfi', 300.00, 1, 891, 'jhue', 6, NULL, '2025-12-31 19:05:21', '2026-01-15 14:42:34', '1767215121.jpg'),
 (81, 'Computer', 'gjhgh', 80000.00, 1, 896, 'kloi', 7, NULL, '2026-01-01 15:50:19', '2026-01-12 17:56:09', '1767289819.jpg'),
-(82, 'Samsung s24 ultr', 'samseng', 87000.00, 1, 399, 'tyi', 35, NULL, '2026-01-12 18:01:32', '2026-01-12 18:01:32', '1768248092.jpg');
+(82, 'Samsung s24 ultr', 'samseng', 87000.00, 1, 387, 'tyi', 35, NULL, '2026-01-12 18:01:32', '2026-01-19 18:42:01', '1768248092.jpg'),
+(83, 'wash', 'color black', 600.00, 1, 596, '89lo', 7, NULL, '2026-01-18 16:31:17', '2026-01-19 18:42:01', '1768761077.jpg'),
+(84, 'iPhone17 pro', 'nm', 90000.00, 1, 193, '78ui', 10, NULL, '2026-01-19 18:39:38', '2026-01-24 08:59:08', '[\"1769086693_69721ee59bbcc.jpg\",\"1769086693_69721ee59cb90.jpg\",\"1769086693_69721ee59d7b9.png\",\"1769086693_69721ee59e120.jpg\"]'),
+(88, 'rtx 5060', 'rtx', 300.00, 1, 6996, 'yuio', 5, NULL, '2026-01-20 17:12:52', '2026-01-22 11:41:38', '[\"1768941600_696fe8204ce4e.jpg\",\"1768941600_696fe8204d67b.jpg\",\"1768941600_696fe8204dfb9.jpg\"]'),
+(89, 'pc computer', 'jfj', 20000.00, 1, 6999, 'jko', 7, NULL, '2026-01-21 11:45:20', '2026-01-21 14:22:25', '[\"1769003120_6970d870194de.jpg\",\"1769003120_6970d87024f0b.jpg\",\"1769003120_6970d87034ef0.jpg\",\"1769003120_6970d870392ed.jpg\"]'),
+(92, 'oppo 15 pro +5g', 'yuioioiouuu', 7500.00, 1, 1460, 'io', 10, NULL, '2026-02-04 18:30:00', '2026-02-06 12:27:54', '[\"1770237000_6983ac486f803.jpg\",\"1770237000_6983ac486fe57.jpg\",\"1770237000_6983ac48705b6.png\",\"1770237000_6983ac4871301.jpg\",\"1770237000_6983ac4871b12.jpg\"]'),
+(93, 'iPhone15 pro max', 'camera 42 mpx', 50000.00, 1, 400, 'pgo', 40, NULL, '2026-02-06 12:47:23', '2026-02-06 12:47:23', '[\"1770389243_6985fefb162e7.jpg\",\"1770389243_6985fefb16cad.jpg\",\"1770389243_6985fefb174c7.jpg\",\"1770389243_6985fefb17cb1.jpg\",\"1770389243_6985fefb185c9.jpg\"]');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ratings`
+--
+
+CREATE TABLE `ratings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
+  `rating` tinyint(4) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `ratings`
+--
+
+INSERT INTO `ratings` (`id`, `user_id`, `product_id`, `rating`, `created_at`, `updated_at`) VALUES
+(1, 11, 31, 5, '2026-01-18 16:26:07', '2026-01-18 16:26:07'),
+(2, 11, 56, 5, '2026-01-18 17:35:29', '2026-01-18 17:35:29');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role_user`
+--
+
+CREATE TABLE `role_user` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `role_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -659,7 +797,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('cMGunToVkbkTo0pFQix8m3ZHV7DOiuv6KD9Qm5ov', 10, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoianZGMjFzTkFmUlUxV3R2QkFRV01SNEt4VEZhZ0g4Smt3V2l5cHAzcSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9jb21wbGFpbnRzIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTA7fQ==', 1768320399);
+('2iHaLTTRlMyyxhIJmC8DRTfidruLlU0BAXQ8P2mE', 12, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoieWt0S2J5dDRyb0RWZU03ZDJPcWV1WWs0R252Sk1oeXdmSG9GN21VYiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9zaG93L2hvbWUiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjEwO3M6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjEyO30=', 1770654329);
 
 -- --------------------------------------------------------
 
@@ -691,7 +829,9 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 (7, 'Ibrahem', 'ip12349@gmail.com', NULL, '$2y$12$h1oz7rh.K7HK24bgOr1JZ.eI5HLS5l50x5Vr7lHiTEw0T7flmnK/y', NULL, '2025-10-12 15:13:56', '2025-10-12 15:13:56'),
 (8, 'Ibrahem', 'Ibrahem@gimel.com', NULL, '$2y$12$aii5LJsc3bo/4n6yauBVE.aBeKR4ITGnSZnnMC2mhc.UVX7HL3Ml2', NULL, '2025-10-12 15:30:16', '2025-10-12 15:30:16'),
 (9, 'Ahmed', 'ahmwd@gmail.com', NULL, '$2y$12$Th4ZcUbDSarCOnTrtt2hwuC5.c5m2b39bMQ05Hv12HHL19.xkuXFe', NULL, '2025-11-07 09:27:18', '2025-11-07 09:27:18'),
-(10, 'Ahmed', 'ahmed1@gmail.com', NULL, '$2y$12$JyhBdAF7YApgRsrL0o.N6u8Uvijyl484PUr4B8yJtJ10yHVeAUPyy', NULL, '2026-01-12 19:21:26', '2026-01-12 19:21:26');
+(10, 'Ahmed', 'ahmed1@gmail.com', NULL, '$2y$12$JyhBdAF7YApgRsrL0o.N6u8Uvijyl484PUr4B8yJtJ10yHVeAUPyy', NULL, '2026-01-12 19:21:26', '2026-01-12 19:21:26'),
+(11, 'ahmed', 'ahmed7@gmail.com', NULL, '$2y$12$xNhXVVnBJAA5TyVc9ZSmKeMNjGInoG0QK3HKt0XhIqIKAHvrzYDd6', NULL, '2026-01-14 06:28:09', '2026-01-14 06:28:09'),
+(12, 'ahmed', 'ahmed8@gmail.com', NULL, '$2y$12$QQ4xtHBtHLljSK6Ff3OL4.UUGIBDQCin5KcMWj3ZEB4gCI199YgX6', 'vAYW66AJFk3JEE3ITeTAezV3UfbGyyesnq6xMU9e1D2gpfsXlLKaEIvv1B6x', '2026-01-19 18:31:11', '2026-01-19 18:31:11');
 
 -- --------------------------------------------------------
 
@@ -706,6 +846,17 @@ CREATE TABLE `videos` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `videos`
+--
+
+INSERT INTO `videos` (`id`, `title`, `youtube_url`, `created_at`, `updated_at`) VALUES
+(21, 'pc', 'https://www.youtube.com/watch?v=T8vGwAsYomw&pp=ygUDcGMg', '2026-01-16 16:48:19', '2026-01-16 16:48:19'),
+(22, 'lap', 'https://www.youtube.com/watch?v=PT7Qa7P00ZY&pp=ygUDcGMg', '2026-01-16 16:49:11', '2026-01-16 16:49:11'),
+(23, 'pc', 'https://www.youtube.com/watch?v=tsu0Rw3Nqi8&pp=ygUDcGMg', '2026-01-16 16:49:56', '2026-01-16 16:49:56'),
+(24, 'lap', 'https://www.youtube.com/watch?v=nBerPYFxXZo&pp=ygUDcGMg', '2026-01-16 16:51:23', '2026-01-16 16:51:23'),
+(26, 'iphone 17 pro', 'https://www.youtube.com/watch?v=TZfNHV24sR4&pp=ygURaXBob25lIDE3IHBybyBtYXg%3D', '2026-01-19 18:35:35', '2026-01-19 18:35:35');
 
 --
 -- Indexes for dumped tables
@@ -761,6 +912,20 @@ ALTER TABLE `complaints`
 ALTER TABLE `customers`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `employees`
+--
+ALTER TABLE `employees`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `employee_role`
+--
+ALTER TABLE `employee_role`
+  ADD PRIMARY KEY (`employee_id`,`role_id`),
+  ADD KEY `role_id` (`role_id`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -829,6 +994,28 @@ ALTER TABLE `products`
   ADD UNIQUE KEY `products_sku_unique` (`sku`);
 
 --
+-- Indexes for table `ratings`
+--
+ALTER TABLE `ratings`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ratings_user_id_foreign` (`user_id`),
+  ADD KEY `ratings_product_id_foreign` (`product_id`);
+
+--
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `role_user`
+--
+ALTER TABLE `role_user`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `role_user_role_id_foreign` (`role_id`),
+  ADD KEY `role_user_user_id_foreign` (`user_id`);
+
+--
 -- Indexes for table `sessions`
 --
 ALTER TABLE `sessions`
@@ -863,7 +1050,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=254;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=289;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -881,13 +1068,19 @@ ALTER TABLE `clients`
 -- AUTO_INCREMENT for table `complaints`
 --
 ALTER TABLE `complaints`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `employees`
+--
+ALTER TABLE `employees`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -905,19 +1098,19 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=162;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=194;
 
 --
 -- AUTO_INCREMENT for table `posts`
@@ -929,19 +1122,37 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+
+--
+-- AUTO_INCREMENT for table `ratings`
+--
+ALTER TABLE `ratings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `role_user`
+--
+ALTER TABLE `role_user`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Constraints for dumped tables
@@ -954,11 +1165,32 @@ ALTER TABLE `carts`
   ADD CONSTRAINT `carts_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `employee_role`
+--
+ALTER TABLE `employee_role`
+  ADD CONSTRAINT `employee_role_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `employee_role_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `order_items`
 --
 ALTER TABLE `order_items`
   ADD CONSTRAINT `order_items_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `order_items_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `ratings`
+--
+ALTER TABLE `ratings`
+  ADD CONSTRAINT `ratings_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `ratings_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `role_user`
+--
+ALTER TABLE `role_user`
+  ADD CONSTRAINT `role_user_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `role_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

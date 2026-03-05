@@ -28,11 +28,28 @@
                                     <input type="checkbox" class="form-check-input item-checkbox">
                                 </div>
 
-                                {{-- PRODUCT IMAGE --}}
-                                <div class="col-md-2">
-                                    <img src="{{ $product->img ? asset('img/'.$product->img) : 'https://via.placeholder.com/100' }}" 
-                                         class="img-fluid rounded-3" alt="{{ $product->name }}">
-                                </div>
+                               {{-- PRODUCT IMAGE --}}
+<div class="col-md-2">
+    @php
+        // تحقق إذا الصورة مخزنة JSON (أكثر من صورة) أو صورة واحدة
+        if ($product->img) {
+            $decodedImages = json_decode($product->img, true);
+            $firstImage = is_array($decodedImages) ? $decodedImages[0] : $product->img;
+        } else {
+            $firstImage = null;
+        }
+    @endphp
+
+    @if($firstImage)
+        <img src="{{ asset('img/' . $firstImage) }}" 
+             class="img-fluid rounded-3" 
+             alt="{{ $product->name }}">
+    @else
+        <img src="https://via.placeholder.com/100" 
+             class="img-fluid rounded-3" 
+             alt="No Image">
+    @endif
+</div>
 
                                 {{-- PRODUCT INFO --}}
                                 <div class="col-md-4">

@@ -89,3 +89,11 @@
     color: #efefef; /* تغيير للهوف */
     box-shadow: 0 0 8px #ffffff;
 }
+
+.social-icons a.tiktok {
+    color: #000000; /* اللون الأصلي */
+}
+.social-icons a.tiktok:hover {
+    color: #ffffff; /* تغيير للهوف */
+    box-shadow: 0 0 8px #ffffff;
+}

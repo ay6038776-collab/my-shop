@@ -47,3 +47,20 @@
     
     // تأجيل تشغيل العدادات حتى يتم تحميل الـ DOM بالكامل
     document.addEventListener("DOMContentLoaded", initializeProductTimers);
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const loader = document.querySelector('.loader');
+    const loaderSpan = loader.querySelector('span');
+
+    // يشتغل مرة واحدة
+    loaderSpan.style.animationPlayState = 'running';
+
+    // بعد انتهاء مدة الأنيميشن نخفي العنصر تدريجيًا
+    setTimeout(() => {
+        loader.style.transition = 'opacity 1s ease';
+        loader.style.opacity = '0';
+    }, 2000); // 2000ms = مدة الأنيميشن
+});
+
+
+

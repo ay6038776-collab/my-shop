@@ -29,25 +29,35 @@ class ProductController extends Controller
             'description'          => 'nullable|string',
             'stock'                => 'required|integer|min:0',
             'sku'                  => 'required|string|max:100',
-            'img'                  => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+
+            // رفع حتى 10 صور
+            'img'                  => 'required|array|max:10',
+            'img.*'                => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+
             'discount_percentage'  => 'nullable|numeric|min:0|max:100',
         ]);
 
-        // رفع الصورة
+        // رفع الصور وتخزين أسمائهم في Array
+        $imageNames = [];
         if ($request->hasFile('img')) {
-            $imageName = time() . '.' . $request->img->extension();
-            $request->img->move(public_path('img'), $imageName);
-            $data['img'] = $imageName;
+            foreach ($request->file('img') as $image) {
+                $name = time() . '_' . uniqid() . '.' . $image->extension();
+                $image->move(public_path('img'), $name);
+                $imageNames[] = $name;
+            }
         }
 
-        // قيمة افتراضية
+        // تخزين الصور كـ JSON
+        $data['img'] = json_encode($imageNames);
+
+        // قيم افتراضية
         $data['is_new'] = 1;
         $data['discount_percentage'] = $request->input('discount_percentage', 0);
 
         Product::create($data);
 
         return redirect()->route('products.index')
-            ->with('success', '✅ Product added successfully');
+                         ->with('success', '✅ Product added successfully');
     }
 
     // صفحة التعديل
@@ -65,15 +75,23 @@ class ProductController extends Controller
             'description'          => 'nullable|string',
             'stock'                => 'required|integer|min:0',
             'sku'                  => 'required|string|max:100|unique:products,sku,' . $product->id,
-            'img'                  => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+
+            // صور جديدة اختيارية
+            'img'                  => 'nullable|array|max:10',
+            'img.*'                => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+
             'discount_percentage'  => 'nullable|numeric|min:0|max:100',
         ]);
 
-        // رفع صورة جديدة لو موجودة
+        // رفع صور جديدة إذا تم اختيارها
         if ($request->hasFile('img')) {
-            $imageName = time() . '.' . $request->img->extension();
-            $request->img->move(public_path('img'), $imageName);
-            $data['img'] = $imageName;
+            $imageNames = [];
+            foreach ($request->file('img') as $image) {
+                $name = time() . '_' . uniqid() . '.' . $image->extension();
+                $image->move(public_path('img'), $name);
+                $imageNames[] = $name;
+            }
+            $data['img'] = json_encode($imageNames);
         }
 
         $data['discount_percentage'] = $request->input('discount_percentage', 0);
@@ -81,7 +99,7 @@ class ProductController extends Controller
         $product->update($data);
 
         return redirect()->route('products.index')
-            ->with('success', '✅ Product updated successfully');
+                         ->with('success', '✅ Product updated successfully');
     }
 
     // حذف منتج
@@ -96,7 +114,7 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect()->route('products.index')
-            ->with('success', '🗑 Product deleted successfully');
+                         ->with('success', '🗑 Product deleted successfully');
     }
 
     // حذف جماعي

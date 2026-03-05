@@ -54,7 +54,7 @@
         .then(res => res.json())
         .then(data => {
             if (data.status === 'success' && data.cart_count !== undefined) {
-                 document.getElementById('cart-count').textContent = data.cart_count;
+                 document.getElementById('cart-count').textContent= data.cart_count;
             }
             alert(data.message);
         })
@@ -90,3 +90,20 @@
 
     favButton.addEventListener('click', toggleHeart);
     document.getElementById('favIcon').addEventListener('click', toggleHeart);
+
+    document.querySelectorAll('.rating-input').forEach(input => {
+    input.addEventListener('change', function() {
+        const emojiDisplay = document.getElementById('emoji-display');
+        const rating = this.value;
+
+        // تغيير الإيموجي بناءً على القيمة
+        switch(rating) {
+            case '1': emojiDisplay.textContent = '🤨'; break;
+            case '2': emojiDisplay.textContent = '🤔'; break;
+            case '3': emojiDisplay.textContent = '😐'; break;
+            case '4': emojiDisplay.textContent = '🙂'; break;
+            case '5': emojiDisplay.textContent = '😍'; break;
+            default: emojiDisplay.textContent = '😐';
+        }
+    });
+});

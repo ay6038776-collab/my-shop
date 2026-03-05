@@ -36,7 +36,7 @@
                 <a href="#vision-mission" class="btn btn-primary mt-3">Discover Our Vision</a>
             </div>
             <div class="col-lg-5 text-center mt-5 mt-lg-0" data-animate="fade-up">
-                <img src="{{ asset('img/1757660332.jpg') }}" 
+                <img src="{{ asset('img/images/Ahmed .jpeg') }}" 
                      alt="Online Shopping Concept" class="img-fluid rounded-4 shadow-lg" style="max-height: 400px; object-fit: cover;">
             </div>
         </div>

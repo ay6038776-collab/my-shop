@@ -55,7 +55,7 @@
                                     <i class="fa-brands fa-facebook-f"></i>
                                 </a>
 
-                                <a href="#" target="_blank" class="twitter">
+                                <a href="https://x.com/ay603877ea" target="_blank" class="twitter">
                                     <i class="fa-brands fa-x-twitter"></i>
                                 </a>
 
@@ -65,6 +65,9 @@
 
                                 <a href="https://www.linkedin.com/in/ahmad-yasser-978796393" target="_blank" class="linkedin">
                                     <i class="fa-brands fa-linkedin-in"></i>
+                                </a>
+                                 <a href="https://www.tiktok.com/@c_a_408?is_from_webapp=1&sender_device=pc" target="_blank" class="tiktok">
+                                    <i class="fa-brands fa-tiktok"></i>
                                 </a>
                          </div>
                     </div>

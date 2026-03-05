@@ -196,6 +196,7 @@
       <li><a href="{{ url('admin/index') }}"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
       <li><a href="{{ url('admin/products') }}"><i class="fa-solid fa-box-open"></i> Products</a></li>
        <li><a href="{{ url('admin/orders') }}"><i class="fa-solid fa-box-open"></i> orders</a></li>
+        <li><a href="{{ url('admin/employees') }}"><i class="fa-solid fa-people-group"></i> employees</a></li>
       <li><a href="{{ url('admin/videos') }}"><i class="fa-solid fa-video"></i> Videos</a></li>
       <li><a href="{{ route('admin.complaints.index') }}"><i class="fa-solid fa-envelope"></i> Complaints</a></li>
       <li><a href="{{ url('admin/login') }}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>

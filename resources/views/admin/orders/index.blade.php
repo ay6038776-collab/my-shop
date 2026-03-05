@@ -245,13 +245,31 @@
                         @endphp
 
                         <div class="product-row">
-                            <div class="product-image">
-                                @if(isset($item->product->img))
-                                    <img src="{{ asset('img/' . $item->product->img) }}" alt="{{ $item->product->name }}">
-                                @else
-                                    <img src="https://via.placeholder.com/300x200" alt="No Image">
-                                @endif
-                            </div>
+                           <div class="product-image">
+    @php
+        $imagePath = null;
+
+        if(isset($item->product->img) && $item->product->img){
+            // لو الصورة JSON (أكثر من صورة)
+            $decodedImages = json_decode($item->product->img, true);
+            if(is_array($decodedImages) && count($decodedImages)){
+                $imagePath = $decodedImages[0]; // أول صورة
+            } else {
+                $imagePath = $item->product->img; // نص عادي
+            }
+        }
+
+        // التأكد من وجود الصورة في المسارات
+        if($imagePath && file_exists(public_path('storage/' . $imagePath))){
+            $imagePath = asset('storage/' . $imagePath);
+        } elseif($imagePath && file_exists(public_path('img/' . $imagePath))){
+            $imagePath = asset('img/' . $imagePath);
+        } else {
+            $imagePath = 'https://via.placeholder.com/75x75?text=No+Image';
+        }
+    @endphp
+    <img src="{{ $imagePath }}" alt="{{ $item->product->name ?? 'Product' }}">
+</div>
 
                             <div>
                                 <div class="product-name">{{ $item->product->name ?? 'Deleted Product' }}</div>

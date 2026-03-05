@@ -60,4 +60,14 @@ class Product extends Model
         $end = $this->created_at->copy()->addDays(8);
         return Carbon::now()->between($start, $end);
     }
+    public function ratings()
+{
+    return $this->hasMany(Rating::class);
+}
+
+public function averageRating()
+{
+    return $this->ratings()->avg('rating') ?? 0;
+}
+
 }

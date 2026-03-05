@@ -130,8 +130,11 @@ document.getElementById('addToCartBtn').addEventListener('click', function () {
     .then(res => res.json())
     .then(data => {
         alert(data.message);
-        if(data.cart_count !== undefined){
-            document.getElementById('cart-count').textContent = data.cart_count;
-        }
+      if (data.cart_count !== undefined) {
+    const cartCountEl = document.getElementById('cart-count');
+    if (cartCountEl) {
+        cartCountEl.textContent = data.cart_count;
+    }
+}
     });
 });

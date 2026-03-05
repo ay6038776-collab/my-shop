@@ -126,10 +126,17 @@
 
             </div>
 
-            <div class="mb-3">
-                <label class="form-label">Product Image</label>
-                <input type="file" name="img" class="form-control input-box">
-            </div>
+          <div class="mb-3">
+    <label class="form-label">Product Images (10 images)</label>
+    <input 
+        type="file"
+        name="img[]"
+        class="form-control input-box"
+        multiple
+        accept="image/*"
+        max="10"
+    >
+    </div>
 
             <div class="d-flex justify-content-between mt-3">
                 <a href="{{ route('products.index') }}" class="btn btn-custom px-4">

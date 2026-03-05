@@ -5,9 +5,24 @@
 @section('content')
 
 <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+
+
+<p class="loader">
+    @auth('customer')
+        <span>{{ auth('customer')->user()->name }}</span>
+
+    @elseif(auth()->check())
+        <span>{{ auth()->user()->name }}</span>
+
+    @else
+        <span>Guest</span>
+    @endauth
+</p>
+
+
 <div class="container py-5">
     <div class="text-center mb-5">
-        <h1 class="fw-bolder display-5 text-dark-accent">🚀 Our Latest Products</h1>
+        <h1 class="fw-bolder display-5 text-dark-accent">🌙 رمضان كريم - Latest Products</h1>
         <p class="text-muted fs-5">Don't Miss Out on Our Featured Limited-Time Offers!</p>
     </div>
 
@@ -22,14 +37,24 @@
                 <div class="col-md-6 col-lg-3">
                     <div class="card clean-product-card border-0 rounded-4 shadow-sm h-100 overflow-hidden">
                         
+                        <!-- صورة المنتج -->
                         <div class="product-image-container position-relative">
-                            @if($product->img)
-                                <img src="{{ asset('img/' . $product->img) }}" alt="{{ $product->name }}" class="img-fluid">
-                            @else
-                                <img src="https://via.placeholder.com/300x200?text=No+Image" alt="No Image" class="img-fluid">
-                            @endif
-                        </div>
+                          @php
+    // تحقق إذا الصورة مخزنة JSON (أكثر من صورة) أو صورة واحدة
+    if ($product->img) {
+        $images = is_array(json_decode($product->img)) ? json_decode($product->img) : [$product->img];
+        $firstImage = $images[0]; // نجيب أول صورة فقط
+    } else {
+        $firstImage = null;
+    }
+@endphp
 
+@if($firstImage)
+    <img src="{{ asset('img/' . $firstImage) }}" alt="{{ $product->name }}" class="img-fluid">
+@else
+    <img src="https://via.placeholder.com/300x200?text=No+Image" alt="No Image" class="img-fluid">
+@endif
+                        </div>
                         <div class="card-body d-flex flex-column text-center p-3">
                             <h6 class="card-title fw-bold text-dark mb-1">{{ $product->name }}</h6>
 

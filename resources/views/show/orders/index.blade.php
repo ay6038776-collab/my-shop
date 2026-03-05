@@ -53,20 +53,32 @@
                                         @endif
                                     </td>
 
-                                    {{-- الصورة --}}
-                                    <td>
-                                        @php
-                                            $imagePath = $item->product->img ?? null;
-                                            if ($imagePath && file_exists(public_path('storage/' . $imagePath))) {
-                                                $imagePath = asset('storage/' . $imagePath);
-                                            } elseif ($imagePath && file_exists(public_path('img/' . $imagePath))) {
-                                                $imagePath = asset('img/' . $imagePath);
-                                            } else {
-                                                $imagePath = 'https://via.placeholder.com/50x50?text=No+Image';
-                                            }
-                                        @endphp
-                                        <img src="{{ $imagePath }}" alt="{{ $item->product->name ?? 'Product' }}" class="product-img">
-                                    </td>
+                                  {{-- الصورة --}}
+                                            <td>
+                                                @php
+                                                    $imagePath = null;
+
+                                                    if($item->product && $item->product->img){
+                                                        // لو الصورة JSON
+                                                        $decodedImages = json_decode($item->product->img, true);
+                                                        if(is_array($decodedImages) && count($decodedImages)){
+                                                            $imagePath = $decodedImages[0]; // أول صورة
+                                                        } else {
+                                                            $imagePath = $item->product->img; // نص عادي
+                                                        }
+                                                    }
+
+                                                    // التأكد من وجود الصورة في المجلدات
+                                                    if($imagePath && file_exists(public_path('storage/' . $imagePath))){
+                                                        $imagePath = asset('storage/' . $imagePath);
+                                                    } elseif($imagePath && file_exists(public_path('img/' . $imagePath))){
+                                                        $imagePath = asset('img/' . $imagePath);
+                                                    } else {
+                                                        $imagePath = 'https://via.placeholder.com/50x50?text=No+Image';
+                                                    }
+                                                @endphp
+                                                <img src="{{ $imagePath }}" alt="{{ $item->product->name ?? 'Product' }}" class="product-img rounded-2">
+                                            </td>
 
                                     {{-- الكمية --}}
                                     <td>{{ $item->quantity }}</td>

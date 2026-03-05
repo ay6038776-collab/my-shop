@@ -6,27 +6,53 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
+        // جدول المستخدمين
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean('is_admin')->default(false); // لتحديد المديرين
             $table->rememberToken();
             $table->timestamps();
         });
 
+        // جدول الصلاحيات / الوظائف
+        Schema::create('roles', function (Blueprint $table) {
+            $table->id();
+            $table->string('name'); // مثال: manager, cashier, delivery
+            $table->timestamps();
+        });
+
+        // جدول العلاقة بين المستخدمين والصلاحيات
+        Schema::create('role_user', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('role_id')->constrained()->onDelete('cascade');
+            $table->timestamps();
+        });
+
+        // جدول ساعات العمل
+        Schema::create('work_shifts', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->time('start_time');
+            $table->time('end_time');
+            $table->date('date');
+            $table->timestamps();
+        });
+
+        // جدول كلمات مرور مؤقتة
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
 
+        // جدول الجلسات
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->foreignId('user_id')->nullable()->index();
@@ -37,11 +63,11 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
+        Schema::dropIfExists('work_shifts');
+        Schema::dropIfExists('role_user');
+        Schema::dropIfExists('roles');
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');

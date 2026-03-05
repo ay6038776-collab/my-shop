@@ -29,14 +29,14 @@ body {
     width: 100%;
     height: 100vh;
     background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    color: #fff;
+    color: #000000;
     overflow-x: hidden;
     transition: background 0.5s ease, color 0.5s ease;
 }
 
 body.light-mode {
-    background: linear-gradient(135deg, #e0eafc, #cfdef3);
-    color: #1e293b;
+    background: linear-gradient(135deg, #021920, #161616);
+    color: #000000;
 }
 
 .add-container {
@@ -53,8 +53,8 @@ body.light-mode {
 }
 
 body.light-mode .add-container {
-    background: rgba(255, 255, 255, 0.3);
-    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0);
+    box-shadow: inset 0 0 30px rgb(0, 0, 0);
 }
 
 /* ================== BB8 POSITION ================== */
@@ -1063,6 +1063,236 @@ body.light-mode .add-container {
 /* ================== IMPORTANT ================== */
 /* انسخ بقية CSS بتاع BB8 من الرسالة الأولى زي ما هو */
 
+
+
+/* From Uiverse.io by mobinkakei */ 
+#wifi-loader {
+  --background: #62abff;
+  --front-color: #4f29f0;
+  --back-color: #c3c8de;
+  --text-color: #414856;
+  width: 64px;
+  height: 64px;
+  border-radius: 50px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#wifi-loader svg {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#wifi-loader svg circle {
+  position: absolute;
+  fill: none;
+  stroke-width: 6px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform: rotate(-100deg);
+  transform-origin: center;
+}
+
+#wifi-loader svg circle.back {
+  stroke: var(--back-color);
+}
+
+#wifi-loader svg circle.front {
+  stroke: var(--front-color);
+}
+
+#wifi-loader svg.circle-outer {
+  height: 86px;
+  width: 86px;
+}
+
+#wifi-loader svg.circle-outer circle {
+  stroke-dasharray: 62.75 188.25;
+}
+
+#wifi-loader svg.circle-outer circle.back {
+  animation: circle-outer135 1.8s ease infinite 0.3s;
+}
+
+#wifi-loader svg.circle-outer circle.front {
+  animation: circle-outer135 1.8s ease infinite 0.15s;
+}
+
+#wifi-loader svg.circle-middle {
+  height: 60px;
+  width: 60px;
+}
+
+#wifi-loader svg.circle-middle circle {
+  stroke-dasharray: 42.5 127.5;
+}
+
+#wifi-loader svg.circle-middle circle.back {
+  animation: circle-middle6123 1.8s ease infinite 0.25s;
+}
+
+#wifi-loader svg.circle-middle circle.front {
+  animation: circle-middle6123 1.8s ease infinite 0.1s;
+}
+
+#wifi-loader svg.circle-inner {
+  height: 34px;
+  width: 34px;
+}
+
+#wifi-loader svg.circle-inner circle {
+  stroke-dasharray: 22 66;
+}
+
+#wifi-loader svg.circle-inner circle.back {
+  animation: circle-inner162 1.8s ease infinite 0.2s;
+}
+
+#wifi-loader svg.circle-inner circle.front {
+  animation: circle-inner162 1.8s ease infinite 0.05s;
+}
+
+#wifi-loader .text {
+  position: absolute;
+  bottom: -40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: lowercase;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+}
+
+#wifi-loader .text::before, #wifi-loader .text::after {
+  content: attr(data-text);
+}
+
+#wifi-loader .text::before {
+  color: var(--text-color);
+}
+
+#wifi-loader .text::after {
+  color: var(--front-color);
+  animation: text-animation76 3.6s ease infinite;
+  position: absolute;
+  left: 0;
+}
+
+@keyframes circle-outer135 {
+  0% {
+    stroke-dashoffset: 25;
+  }
+
+  25% {
+    stroke-dashoffset: 0;
+  }
+
+  65% {
+    stroke-dashoffset: 301;
+  }
+
+  80% {
+    stroke-dashoffset: 276;
+  }
+
+  100% {
+    stroke-dashoffset: 276;
+  }
+}
+
+@keyframes circle-middle6123 {
+  0% {
+    stroke-dashoffset: 17;
+  }
+
+  25% {
+    stroke-dashoffset: 0;
+  }
+
+  65% {
+    stroke-dashoffset: 204;
+  }
+
+  80% {
+    stroke-dashoffset: 187;
+  }
+
+  100% {
+    stroke-dashoffset: 187;
+  }
+}
+
+@keyframes circle-inner162 {
+  0% {
+    stroke-dashoffset: 9;
+  }
+
+  25% {
+    stroke-dashoffset: 0;
+  }
+
+  65% {
+    stroke-dashoffset: 106;
+  }
+
+  80% {
+    stroke-dashoffset: 97;
+  }
+
+  100% {
+    stroke-dashoffset: 97;
+  }
+}
+
+@keyframes text-animation76 {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  50% {
+    clip-path: inset(0);
+  }
+
+  100% {
+    clip-path: inset(0 0 0 100%);
+  }
+}
+
+#wifi-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background: rgba(255, 255, 255, 0.92);
+  z-index: 999999;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  pointer-events: all;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#wifi-loader.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+#wifi-loader * {
+  margin: 0 !important;
+}
+ 
 </style>
 </head>
 
@@ -1109,6 +1339,23 @@ body.light-mode .add-container {
         </div>
     </label>
 
+     <div id="wifi-loader">
+    <svg class="circle-outer" viewBox="0 0 86 86">
+        <circle class="back" cx="43" cy="43" r="40"></circle>
+        <circle class="front" cx="43" cy="43" r="40"></circle>
+        <circle class="new" cx="43" cy="43" r="40"></circle>
+    </svg>
+    <svg class="circle-middle" viewBox="0 0 60 60">
+        <circle class="back" cx="30" cy="30" r="27"></circle>
+        <circle class="front" cx="30" cy="30" r="27"></circle>
+    </svg>
+    <svg class="circle-inner" viewBox="0 0 34 34">
+        <circle class="back" cx="17" cy="17" r="14"></circle>
+        <circle class="front" cx="17" cy="17" r="14"></circle>
+    </svg>
+    <div class="text" data-text="Searching"></div>
+</div>
+
     <!-- ================== JS ================== -->
     <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -1130,6 +1377,36 @@ body.light-mode .add-container {
         });
     });
     </script>
+
+     <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const loader = document.getElementById('wifi-loader');
+    if (!loader) return;
+
+    // أول ما الصفحة تفتح → نخفيه
+    loader.classList.remove('active');
+
+    // أي لينك يتداس
+    document.querySelectorAll('a[href]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+
+            // تجاهل اللينكات الوهمية
+            if (!href || href.startsWith('#') || link.target === '_blank') return;
+
+            loader.classList.add('active');
+        });
+    });
+});
+
+// أول ما الصفحة الجديدة تخلص تحميل
+window.addEventListener('load', () => {
+    const loader = document.getElementById('wifi-loader');
+    if (!loader) return;
+
+    loader.classList.remove('active');
+});
+</script>
 
 </body>
 </html>

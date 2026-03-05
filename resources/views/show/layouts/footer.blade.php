@@ -31,7 +31,7 @@ a.text-white:hover {
     <i class="fa-brands fa-facebook-f"></i> Facebook
 </a> |
 
-<a href="#" class="text-white mx-2" target="_blank">
+<a href="https://x.com/ay603877ea" class="text-white mx-2" target="_blank">
     <i class="fa-brands fa-x-twitter"></i> Twitter
 </a> |
 <a href="https://www.linkedin.com/in/ahmad-yasser-978796393" class="text-white mx-2" target="_blank">
@@ -40,6 +40,10 @@ a.text-white:hover {
 
 <a href="https://www.instagram.com/amh_ahmed123/" class="text-white ms-2" target="_blank">
     <i class="fa-brands fa-instagram"></i> Instagram
+</a>
+    |
+<a href="https://www.tiktok.com/@c_a_408?is_from_webapp=1&sender_device=pc" class="text-white ms-2" target="_blank">
+    <i class="fa-brands fa-tiktok"></i> tiktok
 </a>
 
         </div>

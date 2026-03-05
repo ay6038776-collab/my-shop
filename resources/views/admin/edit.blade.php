@@ -1,4 +1,3 @@
-
 @extends('layouts.edit')
 @section('page-title', 'Edit Product')
 
@@ -13,18 +12,18 @@
         color: #fff;
     }
 
-  .normal-card {
-    width: 600px; /* قللنا العرض */
-    min-height: 80px; /* ارتفاع أنسب */
-    padding: 30px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-    transition: all 0.3s ease-in-out;
-    overflow:hidden/* إضافة شريط تمرير عمودي إذا لزم الأمر */
-}
+    .normal-card {
+        width: 600px;
+        min-height: 80px;
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s ease-in-out;
+        overflow:hidden;
+    }
 
     .normal-card:hover {
         transform: scale(1.03);
@@ -135,17 +134,38 @@
             </div>
 
             @if($product->img)
-                <div class="mb-3 text-center">
-                    <label class="form-label">Current Image:</label>
-                    <img src="{{ asset('img/' . $product->img) }}" alt="Product Image"
-     class="img-fluid rounded shadow-sm mt-2" style="max-height: 70px; width: auto;">
-                </div>
+                @php
+                    $images = json_decode($product->img); 
+                    $firstImage = $images[0] ?? null;
+                @endphp
+                @if($firstImage)
+                    <div class="mb-3 text-center">
+                        <label class="form-label">Current Image:</label>
+                        <img src="{{ asset('img/' . $firstImage) }}" alt="Product Image"
+                             class="img-fluid rounded shadow-sm mt-2" style="max-height: 50px; width: auto;">
+                    </div>
+                @endif
             @endif
 
-            <div class="mb-3">
-                <label class="form-label">Upload New Image</label>
-                <input type="file" name="img" class="form-control input-box">
-            </div>
+           <div class="mb-3">
+    <label class="form-label">Upload 10 Images</label>
+    <input type="file" name="img[]" class="form-control input-box" multiple accept="image/*">
+    <small class="text-light opacity-50">Upload exactly 10 images to replace the old ones.</small>
+</div>
+
+@if($product->img)
+    @php
+        $images = is_array(json_decode($product->img)) ? json_decode($product->img) : [$product->img];
+    @endphp
+    <div class="mb-3 text-center">
+        <label class="form-label">Current Images:</label>
+        <div class="d-flex gap-2 justify-content-center mt-2">
+            @foreach($images as $img)
+                <img src="{{ asset('img/' . $img) }}" alt="Product Image" style="height:50px; width:auto;" class="rounded shadow-sm">
+            @endforeach
+        </div>
+    </div>
+@endif
 
             <div class="d-flex justify-content-between mt-3">
                 <a href="{{ route('products.index') }}" class="btn btn-custom px-4">

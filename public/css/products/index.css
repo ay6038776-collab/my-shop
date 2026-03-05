@@ -88,3 +88,62 @@
     top: 1rem;
     left: 1rem;
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 30px;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination li {
+    /* تأكدت إن الـ li دائري تماماً */
+    width: 40px; 
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination li a,
+.pagination li span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #2563eb;
+    background: #f1f5f9;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+/* حل مشكلة الأسهم الكبيرة إذا كانت SVG */
+.pagination li svg, 
+.pagination li i {
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
+}
+
+.pagination li a:hover {
+    background: #2563eb;
+    color: white;
+}
+
+.pagination .active span {
+    background: #2563eb;
+    color: white;
+    font-weight: bold;
+}
+
+.pagination .disabled span {
+    background: #f8fafc;
+    color: #cbd5e1;
+    cursor: not-allowed;
+}
