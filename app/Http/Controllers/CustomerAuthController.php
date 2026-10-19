@@ -4,12 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use App\Models\Customer;
+use App\Notifications\NewCustomer;
 
 class CustomerAuthController extends Controller
 {
     public function showLoginForm()
     {
+        // لو مسجل دخول بالفعل، روحه لل products
+        if (Auth::guard('customer')->check()) {
+            return redirect('/products');
+        }
         return view('show.auth.login');
     }
 
@@ -22,13 +28,12 @@ class CustomerAuthController extends Controller
 
         if (Auth::guard('customer')->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('show.products.index')
+            return redirect('/products')
                 ->with('success', 'تم تسجيل الدخول بنجاح ✅');
         }
 
-        return back()->withErrors([
-            'email' => 'البريد الإلكتروني أو كلمة المرور غير صحيحة.',
-        ])->onlyInput('email');
+        return back()->with('error', 'البريد الإلكتروني أو كلمة المرور غير صحيحة.')
+            ->withInput($request->only('email'));
     }
 
     public function logout(Request $request)
@@ -39,7 +44,7 @@ class CustomerAuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('customer.login')
-            ->with('success', 'تم تسجيل الخروج ✅');
+            ->with('success', 'تم تسجيل الخروج بنجاح ✅');
     }
 
     public function showRegisterForm()
@@ -61,9 +66,15 @@ class CustomerAuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
 
+        // إشعار الأدمن المسجل دخوله بعميل جديد
+        $admin = Auth::guard('admin')->user();
+        if ($admin) {
+            $admin->notify(new NewCustomer($customer));
+        }
+
         Auth::guard('customer')->login($customer);
 
-        return redirect()->route('show.products.index')
+        return redirect('/products')
             ->with('success', 'تم إنشاء الحساب وتسجيل الدخول ✅');
     }
 }

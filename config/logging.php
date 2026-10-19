@@ -127,6 +127,23 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
+        /*
+        |--------------------------------------------------------------------------
+        | Security Log Channel
+        |--------------------------------------------------------------------------
+        |
+        | This channel is used specifically for security-related logs.
+        | It writes to storage/logs/security.log with daily rotation.
+        |
+        */
+        'security' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/security.log'),
+            'level' => 'warning',
+            'days' => 30,
+            'replace_placeholders' => true,
+        ],
+
     ],
 
 ];

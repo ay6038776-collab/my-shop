@@ -290,11 +290,9 @@
 
 
 </head>
-<body class="dark-mode">
+<body >
 
- <div class="theme-toggle" id="theme-toggle">
-        <i class="fa-solid fa-moon"></i>
-    </div>
+ 
 
     {{-- استدعاء الناف بار --}}
     @include('layouts.navbar')

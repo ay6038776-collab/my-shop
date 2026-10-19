@@ -11,28 +11,18 @@
 
     {{-- Bootstrap CSS --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Font Awesome 6.5.1 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    {{-- Custom Styles (If you have a separate app.css) --}}
-    {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
-
-    {{-- Custom CSS from specific view (e.g., the profile styles) --}}
+    {{-- Custom CSS from specific view --}}
     @yield('styles')
 </head>
 <body class="d-flex flex-column min-vh-100">
 
-    {{-- 
-        --- HEADER (بدون شريط تنقل - Navbar) --- 
-        يمكنك وضع أي محتوى أعلى الصفحة هنا، مثل شعار بسيط
-        <h1>Your App Logo</h1>
-    --}}
-    <header class="py-3">
-        {{-- <div class="container text-center">
-            <h5 class="text-white-50">Your App Logo</h5>
-        </div> --}}
-    </header>
-
+    
+    
     {{-- 
         --- PAGE CONTENT --- 
         هذا هو المكان الذي سيتم فيه عرض محتوى الملف الذي ذكرته سابقاً (Profile)
@@ -41,21 +31,15 @@
         @yield('content')
     </main>
 
-    {{-- 
-        --- FOOTER --- 
-        يمكنك تضمين محتوى التذييل (Footer) هنا
-    --}}
-    <footer class="mt-auto py-4 text-center">
+    {{-- FOOTER --}}
+    <footer class="mt-auto py-4 text-center bg-light border-top">
         <div class="container">
-            <span class="text-white-50">&copy; {{ date('Y') }} Your App Name. All rights reserved.</span>
+            <span class="text-muted">&copy; {{ date('Y') }} Your App Name. All rights reserved.</span>
         </div>
     </footer>
 
     {{-- Bootstrap JS Bundle --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    {{-- Custom JS (If you have a separate app.js) --}}
-    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
 
     {{-- Scripts from specific view --}}
     @yield('scripts')

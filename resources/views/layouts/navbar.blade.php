@@ -104,8 +104,8 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Extend collapse for mobile */
-@media (max-width: 992px) {
+/* Extend collapse for mobile - Large screens (1920x1080 and similar) */
+@media (max-width: 1920px) {
     .navbar-collapse {
         background: linear-gradient(90deg, #0f2027, #203a43, #2c5364);
         position: absolute;
@@ -123,12 +123,177 @@ body {
     }
 }
 
-/* Hide links and toggle button on large screens */
-@media (min-width: 993px) {
-    .navbar-nav,
+/* Hide links and toggle button on large screens - but show toggle on 1920px */
+@media (min-width: 1921px) {
+    .navbar-nav {
+        display: none;
+    }
     .navbar-toggle {
-        display: none; 
-        
+        display: block !important;
+    }
+}
+
+/* Sidebar Toggle Button */
+.sidebar-toggle-btn {
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: none;
+    position: absolute;
+    right: 15px;
+}
+
+.sidebar-toggle-btn:hover {
+    background: rgba(255,255,255,0.1);
+    color: #30a5ff;
+}
+
+/* =========================================================
+   SIDEBAR TOGGLE BUTTON
+   يظهر فقط على الشاشات الصغيرة
+========================================================= */
+
+.sidebar-toggle-btn {
+    border: none;
+    background: transparent;
+
+    color: #fff;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    padding: 8px 12px;
+
+    border-radius: 6px;
+
+    transition: all 0.3s ease;
+
+    display: none;
+
+    position: absolute;
+
+    right: 15px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    z-index: 1100;
+}
+
+.sidebar-toggle-btn:hover {
+    background: rgba(255,255,255,0.1);
+
+    color: #30a5ff;
+}
+
+
+/* =========================================================
+   DESKTOP
+   Sidebar ظاهر وثابت
+========================================================= */
+
+@media (min-width: 1200px) {
+
+    .sidebar-toggle-btn {
+        display: none !important;
+    }
+
+    .sidebar {
+        display: block !important;
+
+        position: fixed !important;
+
+        left: 0;
+        top: 0;
+
+        height: 100vh;
+
+        z-index: 1000;
+
+        transform: translateX(0) !important;
+
+        visibility: visible !important;
+    }
+
+    .sidebar-overlay {
+        display: none !important;
+    }
+
+    body {
+        padding-left: 250px;
+    }
+}
+
+
+/* =========================================================
+   TABLET + MOBILE
+   Sidebar مخفي والزرار يظهر
+========================================================= */
+
+@media (max-width: 1199px) {
+
+    .sidebar-toggle-btn {
+        display: block !important;
+    }
+
+    .sidebar {
+        position: fixed !important;
+
+        top: 0;
+        left: 0;
+
+        height: 100vh;
+
+        z-index: 1200;
+
+        transform: translateX(-100%);
+
+        visibility: hidden;
+
+        transition:
+            transform 0.3s ease,
+            visibility 0.3s ease;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+
+        visibility: visible;
+    }
+
+    .sidebar-overlay {
+        position: fixed;
+
+        inset: 0;
+
+        background: rgba(0,0,0,0.55);
+
+        opacity: 0;
+
+        visibility: hidden;
+
+        z-index: 1150;
+
+        transition:
+            opacity 0.3s ease,
+            visibility 0.3s ease;
+    }
+
+    .sidebar-overlay.active {
+        opacity: 1;
+
+        visibility: visible;
+    }
+
+    body {
+        padding-left: 0;
     }
 }
 </style>
@@ -137,14 +302,25 @@ body {
 
 <nav class="navbar navbar-custom navbar-fixed-top shadow-sm" role="navigation">
     <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-menu"
+        <div class="navbar-header" >
+            <!-- Sidebar Toggle Button -->
+           <button
+    type="button"
+    class="sidebar-toggle-btn"
+    id="sidebarToggleBtn"
+    title="Toggle Sidebar">
+
+    <i class="fa-solid fa-bars"></i>
+
+</button>
+
+            <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-menu"
                 aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-            </button>
+            </button> -->
 
             <a class="navbar-brand fw-bold" href="{{ url('/show/home') }}">
                 <span>my</span> - shop
@@ -152,17 +328,19 @@ body {
         </div>
 
         <!-- Navbar Links -->
-        <div class="collapse navbar-collapse" id="navbar-menu">
+        <!-- <div class="collapse navbar-collapse" id="navbarContent">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="{{ url('admin/index') }}"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
                 <li><a href="{{ url('admin/products') }}"><i class="fa-solid fa-box-open"></i> Products</a></li>
                   <li><a href="{{ url('admin/orders') }}"><i class="fa-solid fa-box-open"></i> orders</a></li>
               <li><a href="{{ url('admin/videos') }}"><i class="fa-solid fa-video"></i> Videos</a></li>
 				<li><a href="{{ route('admin.complaints.index') }}"><i class="fa-solid fa-envelope"></i> Complaints</a></li>
+                 <li><a href="{{ url('admin/employees') }}"><i class="fa-solid fa-users"></i> Employees</a></li>
+                 <li><a href="{{ url('admin/settings') }}"><i class="fa-solid fa-gear"></i> Settings</a></li>
                  <li><a href="{{ url('admin/login') }}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
             </ul>
         </div>
-    </div>
+    </div> -->
 </nav>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -171,6 +349,8 @@ body {
 <script>
 $(document).ready(function() {
     var menu = $('#navbar-menu');
+    var sidebar = $('#sidebar');
+    var sidebarOverlay = $('#sidebarOverlay');
 
     // حالة المينيو (مفتوح/مقفل)
     var isOpen = false;
@@ -199,6 +379,27 @@ $(document).ready(function() {
             menu.slideUp(300);
             isOpen = false;
         }
+    });
+
+    // Sidebar Toggle from Navbar Button
+    $('#sidebarToggleBtn').click(function(e) {
+        e.stopPropagation();
+        if (sidebar.hasClass('open')) {
+            sidebar.removeClass('open');
+            sidebarOverlay.removeClass('active');
+            $('body').removeClass('sidebar-active');
+        } else {
+            sidebar.addClass('open');
+            sidebarOverlay.addClass('active');
+            $('body').addClass('sidebar-active');
+        }
+    });
+
+    // Close sidebar when clicking overlay
+    sidebarOverlay.click(function() {
+        sidebar.removeClass('open');
+        sidebarOverlay.removeClass('active');
+        $('body').removeClass('sidebar-active');
     });
 });
 </script>

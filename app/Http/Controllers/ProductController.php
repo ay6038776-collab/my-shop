@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
+use App\Notifications\LowStock;
 
 class ProductController extends Controller
 {
@@ -32,7 +34,7 @@ class ProductController extends Controller
 
             // رفع حتى 10 صور
             'img'                  => 'required|array|max:10',
-            'img.*'                => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'img.*'                => 'image|mimes:jpeg,png,jpg,gif,webp,avif|max:2048',
 
             'discount_percentage'  => 'nullable|numeric|min:0|max:100',
         ]);
@@ -54,7 +56,15 @@ class ProductController extends Controller
         $data['is_new'] = 1;
         $data['discount_percentage'] = $request->input('discount_percentage', 0);
 
-        Product::create($data);
+        $product = Product::create($data);
+
+        // تنبيه مخزون منخفض
+        if ($product->stock > 0 && $product->stock < 5) {
+            $admin = Auth::guard('admin')->user();
+            if ($admin) {
+                $admin->notify(new LowStock($product, $product->stock));
+            }
+        }
 
         return redirect()->route('products.index')
                          ->with('success', '✅ Product added successfully');
@@ -78,7 +88,7 @@ class ProductController extends Controller
 
             // صور جديدة اختيارية
             'img'                  => 'nullable|array|max:10',
-            'img.*'                => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'img.*'                => 'image|mimes:jpeg,png,jpg,gif,webp,avif|max:2048',
 
             'discount_percentage'  => 'nullable|numeric|min:0|max:100',
         ]);
@@ -97,6 +107,14 @@ class ProductController extends Controller
         $data['discount_percentage'] = $request->input('discount_percentage', 0);
 
         $product->update($data);
+
+        // تنبيه مخزون منخفض بعد التحديث
+        if ($product->stock > 0 && $product->stock < 5) {
+            $admin = Auth::guard('admin')->user();
+            if ($admin) {
+                $admin->notify(new LowStock($product, $product->stock));
+            }
+        }
 
         return redirect()->route('products.index')
                          ->with('success', '✅ Product updated successfully');

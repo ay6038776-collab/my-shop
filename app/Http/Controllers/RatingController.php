@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Rating;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class RatingController extends Controller
@@ -14,7 +15,7 @@ class RatingController extends Controller
 
         Rating::updateOrCreate(
             [
-                'user_id' => auth()->id(),
+                'user_id' => auth()->guard('customer')->id(),
                 'product_id' => $id
             ],
             [
@@ -22,6 +23,14 @@ class RatingController extends Controller
             ]
         );
 
-        return back()->with('success', 'تم إضافة تقييمك ⭐');
+        // Get updated average
+        $product = Product::findOrFail($id);
+        $average = $product->averageRating();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'تم إضافة تقييمك ⭐',
+            'average' => $average
+        ]);
     }
 }

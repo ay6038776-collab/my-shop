@@ -10,75 +10,136 @@ class ShowController extends Controller
     // الصفحة الرئيسية
     public function home()
     {
-        $products = Product::where('created_at','>=', now()->subDays(8) )
-        ->latest()
-        ->take(8)
-          ->get();
-    
-        return view('show.home', compact('products'));
+        // للشريط: كل المنتجات بدون فلتر
+        $allProducts = Product::latest()->get();
+
+        // للصفحة الرئيسية: آخر 8 أيام بس
+        $products = Product::where('created_at', '>=', now()->subDays(8))
+            ->latest()
+            ->take(8)
+            ->get();
+
+        return view('show.home', compact('products', 'allProducts'));
     }
 
     // صفحة كل المنتجات
-       // كل المنتجات
-  public function products(Request $request)
-{
-    $query = Product::query();
+    public function products(Request $request)
+    {
+        $query = Product::query();
 
-    if ($request->filled('search')) {
-        $search = $request->search;
+        // البحث
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhere('sku', 'like', "%{$search}%");
+            });
+        }
 
-        $query->where(function ($q) use ($search) {
-            $q->where('name', 'like', "%{$search}%")
-              ->orWhere('description', 'like', "%{$search}%")
-              ->orWhere('sku', 'like', "%{$search}%");
-        });
+        // فلتر السعر - من
+        if ($request->filled('price_min')) {
+            $query->where('price', '>=', $request->price_min);
+        }
+
+        // فلتر السعر - إلى
+        if ($request->filled('price_max')) {
+            $query->where('price', '<=', $request->price_max);
+        }
+
+        // ترتيب
+        if ($request->filled('sort')) {
+            switch ($request->sort) {
+                case 'price_low':
+                    $query->orderBy('price', 'asc');
+                    break;
+                case 'price_high':
+                    $query->orderBy('price', 'desc');
+                    break;
+                case 'newest':
+                    $query->orderBy('created_at', 'desc');
+                    break;
+                case 'name':
+                    $query->orderBy('name', 'asc');
+                    break;
+            }
+        } else {
+            $query->latest();
+        }
+
+        $products = $query->paginate(12);
+
+        return view('show.products.index', compact('products'));
     }
 
-    $products = $query->paginate(12);
+    public function ajaxSearch(Request $request)
+    {
+        $query = Product::query();
 
-    return view('show.products.index', compact('products'));
-}
+        // البحث
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhere('sku', 'like', "%{$search}%");
+            });
+        }
 
+        // فلتر السعر - من
+        if ($request->filled('price_min')) {
+            $query->where('price', '>=', $request->price_min);
+        }
 
-public function ajaxSearch(Request $request)
-{
-    $query = Product::query();
+        // فلتر السعر - إلى
+        if ($request->filled('price_max')) {
+            $query->where('price', '<=', $request->price_max);
+        }
 
-    if ($request->filled('search')) {
-        $search = $request->search;
-        $query->where(function($q) use ($search) {
-            $q->where('name', 'like', "%{$search}%")
-              ->orWhere('description', 'like', "%{$search}%")
-              ->orWhere('sku', 'like', "%{$search}%");
-        });
+        // ترتيب
+        if ($request->filled('sort')) {
+            switch ($request->sort) {
+                case 'price_low':
+                    $query->orderBy('price', 'asc');
+                    break;
+                case 'price_high':
+                    $query->orderBy('price', 'desc');
+                    break;
+                case 'newest':
+                    $query->orderBy('created_at', 'desc');
+                    break;
+                case 'name':
+                    $query->orderBy('name', 'asc');
+                    break;
+            }
+        } else {
+            $query->latest();
+        }
+
+        $products = $query->take(12)->get();
+
+        $html = view('show.products.partials.products', compact('products'))->render();
+
+        return response()->json(['html' => $html]);
     }
 
-    $products = $query->take(12)->get(); // نجيب 12 منتج فقط للعرض السريع
-
-    $html = view('show.products.partials.products', compact('products'))->render();
-
-    return response()->json(['html' => $html]);
-}
-
-public function index(Request $request){
- 
-
-$products = product::padinate(9);
-if ($request->ajax()){
-    return view('products.list' , compact('products'))->render();
-}
-   return view ('products.index ',compact('products'));
-}
+    public function index(Request $request)
+    {
+        $products = Product::paginate(9);
+        if ($request->ajax()) {
+            return view('products.list', compact('products'))->render();
+        }
+        return view('products.index', compact('products'));
+    }
 
     // تفاصيل منتج
     public function details($id)
     {
         $product = Product::findOrFail($id);
         return view('show.products.details', compact('product'));
-}
+    }
 
-
-    // صفحة الفيديوهات (ممكن تعدلها حسب الموديل بتاعك)
+    // صفحة الفيديوهات
     public function videos()
     {
         return view('show.videos.index');
@@ -89,7 +150,4 @@ if ($request->ajax()){
     {
         return view('show.aboutus');
     }
-
-    
-   
 }

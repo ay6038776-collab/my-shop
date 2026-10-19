@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyShop E-Commerce Documentation</title>
+    <style>
+        :root {
+            --accent: #6366f1;
+            --ink: #1e293b;
+            --mute: #64748b;
+            --rule: #e2e8f0;
+            --bg: #f8fafc;
+            --paper: #ffffff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+        
+        * {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        
+        @page {
+            size: A4 portrait;
+            margin: 12mm 14mm;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--ink);
+            line-height: 1.6;
+            background: var(--bg);
+        }
+        
+        /* Cover Page */
+        .cover {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #1e293b 0%, #6366f1 100%);
+            color: white;
+            padding: 40px;
+            page-break-after: always;
+        }
+        
+        .cover-tag {
+            background: rgba(255,255,255,0.15);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+        
+        .cover h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin: 0 0 20px 0;
+            line-height: 1.2;
+        }
+        
+        .cover .subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            max-width: 500px;
+            margin-bottom: 60px;
+        }
+        
+        .cover-meta {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .cover-info {
+            text-align: left;
+            font-size: 12px;
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+        
+        /* Page sections */
+        .page {
+            background: var(--paper);
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        
+        h1, h2, h3, h4 {
+            color: var(--ink);
+            margin-top: 0;
+        }
+        
+        h2 {
+            font-size: 24px;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        h3 {
+            font-size: 18px;
+            color: var(--accent);
+            margin-top: 25px;
+        }
+        
+        /* Table of Contents */
+        .toc {
+            background: var(--paper);
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .toc h2 {
+            margin-bottom: 25px;
+        }
+        
+        .toc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            columns: 2;
+            column-gap: 40px;
+        }
+        
+        .toc-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--rule);
+            break-inside: avoid;
+        }
+        
+        .toc-list a {
+            color: var(--ink);
+            text-decoration: none;
+        }
+        
+        .toc-list a:hover {
+            color: var(--accent);
+        }
+        
+        /* Section headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .section-num {
+            background: var(--accent);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .card {
+            background: var(--bg);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .card.success {
+            border-left-color: var(--success);
+        }
+        
+        .card.warning {
+            border-left-color: var(--warning);
+        }
+        
+        .card.danger {
+            border-left-color: var(--danger);
+        }
+        
+        .card h4 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+        }
+        
+        .card p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--mute);
+        }
+        
+        /* Code blocks */
+        code {
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 12px;
+            color: #7c3aed;
+        }
+        
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+        
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 12px;
+        }
+        
+        th {
+            background: var(--accent);
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--rule);
+        }
+        
+        tr:hover {
+            background: var(--bg);
+        }
+        
+        /* Lists */
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        
+        li {
+            margin: 8px 0;
+        }
+        
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .badge-primary { background: #e0e7ff; color: #4338ca; }
+        .badge-success { background: #d1fae5; color: #059669; }
+        .badge-warning { background: #fef3c7; color: #d97706; }
+        .badge-danger { background: #fee2e2; color: #dc2626; }
+        
+        /* Info boxes */
+        .info-box {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .info-box.success {
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+        }
+        
+        .info-box.warning {
+            background: #fffbeb;
+            border-color: #fde68a;
+        }
+        
+        /* Two column layout */
+        .two-col {
+            columns: 2;
+            column-gap: 30px;
+        }
+        
+        /* Page break */
+        .page-break {
+            page-break-after: always;
+        }
+        
+        /* Navigation index */
+        .nav-index {
+            background: var(--paper);
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .nav-index a {
+            display: block;
+            padding: 10px 15px;
+            background: var(--bg);
+            margin: 8px 0;
+            border-radius: 6px;
+            color: var(--ink);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .nav-index a:hover {
+            background: var(--accent);
+            color: white;
+            padding-left: 25px;
+        }
+        
+        /* Feature list */
+        .feature-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            background: var(--bg);
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .feature-content h4 {
+            margin: 0 0 5px 0;
+            font-size: 14px;
+        }
+        
+        .feature-content p {
+            margin: 0;
+            font-size: 12px;
+            color: var(--mute);
+        }
+        
+        /* Timeline */
+        .timeline-item {
+            display: flex;
+            gap: 20px;
+            padding: 15px 0;
+            border-left: 2px solid var(--rule);
+            margin-left: 10px;
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: absolute;
+            left: -7px;
+            top: 20px;
+        }
+        
+        .timeline-date {
+            min-width: 80px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        /* Grid layout for pages */
+        .page-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .page-card {
+            background: var(--bg);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--rule);
+        }
+        
+        .page-card h4 {
+            margin: 0 0 8px 0;
+            font-size: 13px;
+            color: var(--accent);
+        }
+        
+        .page-card p {
+            margin: 0;
+            font-size: 11px;
+            color: var(--mute);
+        }
+        
+        .page-card code {
+            display: block;
+            margin-top: 8px;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover">
+    <div class="cover-tag">Laravel E-Commerce Platform</div>
+    <h1>MyShop<br>Documentation</h1>
+    <p class="subtitle">Complete technical documentation covering site architecture, features, database models, controllers, and security implementation</p>
+    <div class="cover-meta">
+        <div class="cover-info">
+            <strong>Version:</strong> 1.0<br>
+            <strong>Last Updated:</strong> July 2026<br>
+            <strong>Framework:</strong> Laravel 10+
+        </div>
+    </div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="page" id="toc">
+    <h2>Table of Contents</h2>
+    <div class="toc-list">
+        <li><a href="#overview">1. Project Overview</a></li>
+        <li><a href="#site-structure">2. Site Structure</a></li>
+        <li><a href="#database">3. Database Models</a></li>
+        <li><a href="#controllers">4. Controllers</a></li>
+        <li><a href="#middleware">5. Middleware & Security</a></li>
+        <li><a href="#routes">6. Routes</a></li>
+        <li><a href="#problems">7. Problems Solved</a></li>
+        <li><a href="#features">8. Key Features</a></li>
+        <li><a href="#views">9. Views & Frontend</a></li>
+        <li><a href="#javascript">10. JavaScript Functions</a></li>
+    </div>
+</div>
+
+<!-- 1. PROJECT OVERVIEW -->
+<div class="page" id="overview">
+    <div class="section-header">
+        <span class="section-num">PART 01</span>
+        <h2 style="border: none; margin: 0;">Project Overview</h2>
+    </div>
+    
+    <h3>Project Information</h3>
+    <table>
+        <tr><td style="width: 150px;"><strong>Project Name</strong></td><td>MyShop</td></tr>
+        <tr><td><strong>Type</strong></td><td>E-Commerce Platform</td></tr>
+        <tr><td><strong>Framework</strong></td><td>Laravel 10+</td></tr>
+        <tr><td><strong>Database</strong></td><td>SQLite</td></tr>
+        <tr><td><strong>Frontend</strong></td><td>Blade Templates + jQuery + Swiper.js</td></tr>
+        <tr><td><strong>Auth System</strong></td><td>Multi-guard (Admin + Customer)</td></tr>
+    </table>
+    
+    <h3>Technology Stack</h3>
+    <div class="card-grid">
+        <div class="card">
+            <h4>Backend</h4>
+            <p>Laravel 10+, PHP 8.1+</p>
+        </div>
+        <div class="card">
+            <h4>Database</h4>
+            <p>SQLite (database.sqlite)</p>
+        </div>
+        <div class="card">
+            <h4>Frontend</h4>
+            <p>Bootstrap 5, jQuery, Swiper.js</p>
+        </div>
+        <div class="card">
+            <h4>Icons</h4>
+            <p>Bootstrap Icons, Font Awesome</p>
+        </div>
+    </div>
+</div>
+
+<!-- 2. SITE STRUCTURE -->
+<div class="page page-break" id="site-structure">
+    <div class="section-header">
+        <span class="section-num">PART 02</span>
+        <h2 style="border: none; margin: 0;">Site Structure</h2>
+    </div>
+    
+    <h3>Customer Pages (Frontend)</h3>
+    <div class="page-cards">
+        <div class="page-card">
+            <h4>Home Page</h4>
+            <p>Main landing page with featured products, countdown timers, and ads slider</p>
+            <code>/, /show/home</code>
+        </div>
+        <div class="page-card">
+            <h4>Products Listing</h4>
+            <p>Product grid with search, filtering, and pagination</p>
+            <code>/products</code>
+        </div>
+        <div class="page-card">
+            <h4>Product Details</h4>
+            <p>Detailed product view with ratings, color selection, and add-to-cart</p>
+            <code>/products/{id}</code>
+        </div>
+        <div class="page-card">
+            <h4>Cart</h4>
+            <p>Shopping cart with quantity controls and totals</p>
+            <code>/cart</code>
+        </div>
+        <div class="page-card">
+            <h4>Checkout</h4>
+            <p>Order placement form</p>
+            <code>/checkout</code>
+        </div>
+        <div class="page-card">
+            <h4>Customer Auth</h4>
+            <p>Login, Register, and Social Login</p>
+            <code>/customer/login, /customer/register</code>
+        </div>
+        <div class="page-card">
+            <h4>Profile</h4>
+            <p>Customer profile management and order history</p>
+            <code>/profile, /show/orders</code>
+        </div>
+        <div class="page-card">
+            <h4>Contact & About</h4>
+            <p>Contact form and about us page</p>
+            <code>/contact, /aboutus</code>
+        </div>
+    </div>
+    
+    <h3>Admin Pages (Backend)</h3>
+    <div class="page-cards">
+        <div class="page-card">
+            <h4>Admin Dashboard</h4>
+            <p>Overview statistics and recent activity</p>
+            <code>/admin/index</code>
+        </div>
+        <div class="page-card">
+            <h4>Product Management</h4>
+            <p>CRUD operations for products</p>
+            <code>/admin/products</code>
+        </div>
+        <div class="page-card">
+            <h4>Employee Management</h4>
+            <p>Staff accounts with role-based access</p>
+            <code>/admin/employees</code>
+        </div>
+        <div class="page-card">
+            <h4>Order Management</h4>
+            <p>Order approval and rejection</p>
+            <code>/admin/orders</code>
+        </div>
+        <div class="page-card">
+            <h4>Complaints</h4>
+            <p>Customer complaint handling</p>
+            <code>/admin/complaints</code>
+        </div>
+        <div class="page-card">
+            <h4>Notifications</h4>
+            <p>Admin notification center</p>
+            <code>/admin/notifications</code>
+        </div>
+        <div class="page-card">
+            <h4>Settings</h4>
+            <p>Site configuration with 7 sections</p>
+            <code>/admin/settings</code>
+        </div>
+        <div class="page-card">
+            <h4>Videos</h4>
+            <p>Video content management</p>
+            <code>/admin/videos</code>
+        </div>
+    </div>
+</div>
+
+<!-- 3. DATABASE MODELS -->
+<div class="page" id="database">
+    <div class="section-header">
+        <span class="section-num">PART 03</span>
+        <h2 style="border: none; margin: 0;">Database Models</h2>
+    </div>
+    
+    <h3>Core Models</h3>
+    <table>
+        <thead>
+            <tr><th>Model</th><th>Table</th><th>Key Fields</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>Product</code></td>
+                <td>products</td>
+                <td>name, description, price, discount_percentage, stock, sku, img, category_id, is_new</td>
+            </tr>
+            <tr>
+                <td><code>Order</code></td>
+                <td>orders</td>
+                <td>customer_id, order_number, total_price, status, notes, expires_at, payment_method</td>
+            </tr>
+            <tr>
+                <td><code>OrderItem</code></td>
+                <td>order_items</td>
+                <td>order_id, product_id, quantity, price</td>
+            </tr>
+            <tr>
+                <td><code>Cart</code></td>
+                <td>carts</td>
+                <td>customer_id, product_id, quantity, color</td>
+            </tr>
+            <tr>
+                <td><code>Customer</code></td>
+                <td>customers</td>
+                <td>name, email, password, avatar, provider, provider_id</td>
+            </tr>
+            <tr>
+                <td><code>Rating</code></td>
+                <td>ratings</td>
+                <td>user_id, product_id, rating (1-5)</td>
+            </tr>
+            <tr>
+                <td><code>Employee</code></td>
+                <td>employees</td>
+                <td>name, email, password, avatar, status</td>
+            </tr>
+            <tr>
+                <td><code>Role</code></td>
+                <td>roles</td>
+                <td>name, permissions</td>
+            </tr>
+            <tr>
+                <td><code>Complaint</code></td>
+                <td>complaints</td>
+                <td>customer_id, subject, message, status</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>Product Model Key Methods</h3>
+    <pre><code>// Get discounted price (auto-calculates if within discount period)
+$product->discounted_price;
+
+// Check if product is currently on discount
+$product->isOnDiscount(); // True if created within 8 days
+
+// Get average rating
+$product->averageRating();</code></pre>
+    
+    <h3>Cart Model Color Mapping</h3>
+    <div class="info-box">
+        <p>The Cart model includes a <code>color_class</code> accessor that maps Arabic/English color names to CSS colors:</p>
+        <p style="margin-top:10px;"><strong>Supported colors:</strong> أسود, أحمر, أزرق, أخضر, أصفر, أبيض, وردي, بنفسجي, برتقالي, رمادي, بني, كحلي, تركواز, لافندر, زيتي, فضي, ذهبي, بيج, عنابي, كريمي, فيروزي, نيلي + English equivalents</p>
+    </div>
+</div>
+
+<!-- 4. CONTROLLERS -->
+<div class="page page-break" id="controllers">
+    <div class="section-header">
+        <span class="section-num">PART 04</span>
+        <h2 style="border: none; margin: 0;">Controllers</h2>
+    </div>
+    
+    <h3>Customer Controllers</h3>
+    <table>
+        <thead>
+            <tr><th>Controller</th><th>Methods</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>ShowController</code></td>
+                <td>home, products, details, about</td>
+                <td>Public-facing pages (home, products, product details)</td>
+            </tr>
+            <tr>
+                <td><code>CartController</code></td>
+                <td>index, add, update, remove, clear</td>
+                <td>Shopping cart AJAX operations</td>
+            </tr>
+            <tr>
+                <td><code>CheckoutController</code></td>
+                <td>index, store</td>
+                <td>Order placement</td>
+            </tr>
+            <tr>
+                <td><code>CustomerAuthController</code></td>
+                <td>showLoginForm, login, showRegisterForm, register, logout</td>
+                <td>Customer authentication</td>
+            </tr>
+            <tr>
+                <td><code>SocialLoginController</code></td>
+                <td>redirectTo*, handle*Callback</td>
+                <td>Google, Facebook, Twitter, Apple OAuth</td>
+            </tr>
+            <tr>
+                <td><code>RatingController</code></td>
+                <td>store</td>
+                <td>Product rating (1-5 stars, AJAX)</td>
+            </tr>
+            <tr>
+                <td><code>OrderController</code></td>
+                <td>myOrders, store, downloadInvoice, index, approve, reject</td>
+                <td>Order management</td>
+            </tr>
+            <tr>
+                <td><code>ProfileController</code></td>
+                <td>index, update</td>
+                <td>Customer profile</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>Admin Controllers</h3>
+    <table>
+        <thead>
+            <tr><th>Controller</th><th>Methods</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>DashboardController</code></td>
+                <td>index</td>
+                <td>Admin dashboard stats</td>
+            </tr>
+            <tr>
+                <td><code>ProductController</code></td>
+                <td>index, create, store, edit, update, destroy</td>
+                <td>Product CRUD (Laravel Resource)</td>
+            </tr>
+            <tr>
+                <td><code>EmployeeController</code></td>
+                <td>index, create, store, edit, update, destroy, toggleStatus</td>
+                <td>Employee management</td>
+            </tr>
+            <tr>
+                <td><code>AuthController</code></td>
+                <td>login, register, logout, updateAvatar</td>
+                <td>Admin authentication</td>
+            </tr>
+            <tr>
+                <td><code>SettingsController</code></td>
+                <td>index, update, clearCache, optimize, toggleMaintenance</td>
+                <td>Site settings management</td>
+            </tr>
+            <tr>
+                <td><code>AdminComplaintController</code></td>
+                <td>index, show, destroy</td>
+                <td>Complaint handling</td>
+            </tr>
+            <tr>
+                <td><code>AdminNotificationController</code></td>
+                <td>index, markAsRead, markAllAsRead, destroy, clearAll</td>
+                <td>Notification management</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- 5. MIDDLEWARE & SECURITY -->
+<div class="page" id="middleware">
+    <div class="section-header">
+        <span class="section-num">PART 05</span>
+        <h2 style="border: none; margin: 0;">Middleware & Security</h2>
+    </div>
+    
+    <h3>Custom Middleware</h3>
+    <div class="card-grid">
+        <div class="card">
+            <h4>EnhancedAdminAuth</h4>
+            <p>Session fingerprinting, IP whitelist, concurrent session prevention, activity timeout</p>
+        </div>
+        <div class="card">
+            <h4>BruteForceProtection</h4>
+            <p>Login attempt limiting with exponential backoff</p>
+        </div>
+        <div class="card">
+            <h4>InputSanitization</h4>
+            <p>SQL injection and XSS prevention for all inputs</p>
+        </div>
+        <div class="card">
+            <h4>SecurityHeaders</h4>
+            <p>XSS, CSRF, clickjacking, MIME-type sniffing protection</p>
+        </div>
+        <div class="card">
+            <h4>CustomerAuth</h4>
+            <p>Customer guard middleware</p>
+        </div>
+        <div class="card">
+            <h4>SetLocale</h4>
+            <p>Multi-language support</p>
+        </div>
+    </div>
+    
+    <h3>EnhancedAdminAuth Features</h3>
+    <ul>
+        <li><strong>Session Fingerprinting:</strong> Validates user agent + Accept-Language + user ID</li>
+        <li><strong>IP Whitelist:</strong> Configurable allowed IPs (localhost exempt in dev)</li>
+        <li><strong>Concurrent Session Check:</strong> Prevents multiple simultaneous logins</li>
+        <li><strong>Activity Timeout:</strong> Auto-logout after configurable inactivity (default 30 min)</li>
+        <li><strong>Security Event Logging:</strong> Tracks suspicious activities</li>
+    </ul>
+    
+    <h3>InputSanitization Features</h3>
+    <ul>
+        <li>Recursive sanitization for nested arrays</li>
+        <li>SQL injection pattern removal (UNION, SELECT, DROP, etc.)</li>
+        <li>XSS pattern removal (script tags, javascript:, event handlers)</li>
+        <li>High-severity pattern blocking with 403 response</li>
+        <li>Security logging for suspicious inputs</li>
+    </ul>
+</div>
+
+<!-- 6. ROUTES -->
+<div class="page page-break" id="routes">
+    <div class="section-header">
+        <span class="section-num">PART 06</span>
+        <h2 style="border: none; margin: 0;">Routes</h2>
+    </div>
+    
+    <h3>Route Groups</h3>
+    <table>
+        <thead>
+            <tr><th>Group</th><th>Middleware</th><th>Prefix</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Admin Auth</td>
+                <td>brute.force, input.sanitize</td>
+                <td>/admin/login, /admin/register</td>
+            </tr>
+            <tr>
+                <td>Admin Panel</td>
+                <td>enhanced.admin.auth</td>
+                <td>/admin/*</td>
+            </tr>
+            <tr>
+                <td>Customer Pages</td>
+                <td>set.locale</td>
+                <td>/ (home, products, cart, etc.)</td>
+            </tr>
+            <tr>
+                <td>Protected Customer</td>
+                <td>customer.auth</td>
+                <td>/profile, /cart, /checkout, /orders</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>Social Login Routes</h3>
+    <table>
+        <thead>
+            <tr><th>Provider</th><th>Redirect</th><th>Callback</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Google</td><td>/auth/google</td><td>/auth/google/callback</td></tr>
+            <tr><td>Facebook</td><td>/auth/facebook</td><td>/auth/facebook/callback</td></tr>
+            <tr><td>Twitter/X</td><td>/auth/twitter</td><td>/auth/twitter/callback</td></tr>
+            <tr><td>Apple</td><td>/auth/apple</td><td>/auth/apple/callback</td></tr>
+        </tbody>
+    </table>
+    
+    <h3>API Routes</h3>
+    <ul>
+        <li><code>GET /products/search</code> - AJAX product search</li>
+        <li><code>POST /product/{id}/rate</code> - Submit product rating</li>
+        <li><code>PUT /cart/update/{id}</code> - Update cart quantity</li>
+        <li><code>DELETE /cart/remove/{id}</code> - Remove from cart</li>
+        <li><code>POST /notifications/read/{id}</code> - Mark notification read</li>
+    </ul>
+</div>
+
+<!-- 7. PROBLEMS SOLVED -->
+<div class="page" id="problems">
+    <div class="section-header">
+        <span class="section-num">PART 07</span>
+        <h2 style="border: none; margin: 0;">Problems Solved</h2>
+    </div>
+    
+    <h3>Bug Fixes</h3>
+    <div class="feature-item">
+        <div class="feature-icon">🐛</div>
+        <div class="feature-content">
+            <h4>Cart AJAX Buttons Not Working</h4>
+            <p><strong>Problem:</strong> Cart increment/decrement/delete buttons weren't responding to clicks.<br>
+            <strong>Solution:</strong> Fixed selectors in cart.js - changed `.increase` to `.qty-btn.increase` and added proper event delegation on `#cart-items`.</p>
+        </div>
+    </div>
+    
+    <div class="feature-item">
+        <div class="feature-icon">🐛</div>
+        <div class="feature-content">
+            <h4>Employee Images Not Displaying</h4>
+            <p><strong>Problem:</strong> Employee images showing broken icons.<br>
+            <strong>Solution:</strong> Database column is `avatar` not `image`. Updated all references and storage paths.</p>
+        </div>
+    </div>
+    
+    <div class="feature-item">
+        <div class="feature-icon">🐛</div>
+        <div class="feature-content">
+            <h4>Pagination Links Broken</h4>
+            <p><strong>Problem:</strong> Pagination on products page not working.<br>
+            <strong>Solution:</strong> Typo in selector: `products-conatainer` → `products-container`.</p>
+        </div>
+    </div>
+    
+    <div class="feature-item">
+        <div class="feature-icon">🐛</div>
+        <div class="feature-content">
+            <h4>Product Images Cropped</h4>
+            <p><strong>Problem:</strong> Product images getting cropped in cards.<br>
+            <strong>Solution:</strong> Changed CSS from `object-fit: cover` to `object-fit: contain` so full image is visible with white space if needed.</p>
+        </div>
+    </div>
+    
+    <h3>UI Improvements</h3>
+    <div class="feature-item">
+        <div class="feature-icon">✨</div>
+        <div class="feature-content">
+            <h4>Modern Cart Page Design</h4>
+            <p>Redesigned with glass morphism, gradient backgrounds, and smooth animations.</p>
+        </div>
+    </div>
+    
+    <div class="feature-item">
+        <div class="feature-icon">✨</div>
+        <div class="feature-content">
+            <h4>Product Cards Grid</h4>
+            <p>Added overlay action buttons, discount badges, stock progress bars, and countdown timers.</p>
+        </div>
+    </div>
+    
+    <div class="feature-item">
+        <div class="feature-icon">✨</div>
+        <div class="feature-content">
+            <h4>Interactive Star Rating</h4>
+            <p>Hover effects, click-to-rate, AJAX submission with JSON response.</p>
+        </div>
+    </div>
+</div>
+
+<!-- 8. KEY FEATURES -->
+<div class="page page-break" id="features">
+    <div class="section-header">
+        <span class="section-num">PART 08</span>
+        <h2 style="border: none; margin: 0;">Key Features</h2>
+    </div>
+    
+    <h3>E-Commerce Features</h3>
+    <div class="card-grid">
+        <div class="card success">
+            <h4>Product Discount System</h4>
+            <p>Auto-discount for 8 days after creation. Product model calculates discounted_price automatically.</p>
+        </div>
+        <div class="card success">
+            <h4>24 Arabic Color Options</h4>
+            <p>Complete color mapping with tooltips. Supports Arabic and English color names.</p>
+        </div>
+        <div class="card success">
+            <h4>Multi-language Support</h4>
+            <p>Language switcher with locale middleware. Routes: /lang/{lang}</p>
+        </div>
+        <div class="card success">
+            <h4>Social Login</h4>
+            <p>Google, Facebook, Twitter/X, Apple OAuth integration with automatic account creation.</p>
+        </div>
+    </div>
+    
+    <h3>Admin Features</h3>
+    <div class="card-grid">
+        <div class="card">
+            <h4>Settings Page (7 Sections)</h4>
+            <p>General, Appearance, Security, Payment, Email, Advanced, Danger Zone</p>
+        </div>
+        <div class="card">
+            <h4>Employee Management</h4>
+            <p>CRUD with avatar upload, status toggle, role assignment</p>
+        </div>
+        <div class="card">
+            <h4>Bulk Operations</h4>
+            <p>Bulk delete products and other data cleanup</p>
+        </div>
+        <div class="card">
+            <h4>Maintenance Mode</h4>
+            <p>Toggle via Settings or Artisan command</p>
+        </div>
+    </div>
+    
+    <h3>Security Features</h3>
+    <div class="card-grid">
+        <div class="card danger">
+            <h4>Brute Force Protection</h4>
+            <p>Login attempt limiting with exponential backoff</p>
+        </div>
+        <div class="card danger">
+            <h4>Input Sanitization</h4>
+            <p>SQL injection and XSS prevention on all inputs</p>
+        </div>
+        <div class="card danger">
+            <h4>Session Security</h4>
+            <p>Fingerprinting, IP whitelist, concurrent session prevention</p>
+        </div>
+        <div class="card danger">
+            <h4>Security Headers</h4>
+            <p>X-Frame-Options, CSP, X-XSS-Protection, etc.</p>
+        </div>
+    </div>
+</div>
+
+<!-- 9. VIEWS & FRONTEND -->
+<div class="page" id="views">
+    <div class="section-header">
+        <span class="section-num">PART 09</span>
+        <h2 style="border: none; margin: 0;">Views & Frontend</h2>
+    </div>
+    
+    <h3>View Structure</h3>
+    <pre><code>resources/views/
+├── show/                 # Customer frontend
+│   ├── layouts/
+│   │   └── navbar.blade.php    # Main navbar (light theme)
+│   ├── home.blade.php          # Home page
+│   ├── products/
+│   │   ├── index.blade.php     # Products listing
+│   │   ├── details.blade.php   # Product details
+│   │   └── partials/
+│   │       └── products.blade.php  # Product grid component
+│   ├── auth/
+│   │   ├── cart.blade.php      # Cart page
+│   │   ├── login.blade.php     # Login with social buttons
+│   │   └── register.blade.php  # Register with social buttons
+│   ├── checkout.blade.php      # Checkout page
+│   ├── profile.blade.php       # Customer profile
+│   └── orders/
+│       └── index.blade.php     # Order history
+├── admin/                # Admin panel
+│   ├── layouts/
+│   │   └── sidebar.blade.php   # Admin sidebar
+│   ├── login.blade.php         # Admin login
+│   ├── register.blade.php      # Admin register
+│   ├── index.blade.php         # Dashboard
+│   ├── settings.blade.php      # Settings (7 sections)
+│   ├── products/               # Product CRUD views
+│   ├── employees/             # Employee management
+│   ├── complaints/            # Complaints index & show
+│   └── notifications/         # Notification center</code></pre>
+    
+    <h3>Public Assets</h3>
+    <pre><code>public/
+├── js/
+│   ├── cart.js       # Cart AJAX (jQuery)
+│   └── home.js       # Clock, countdown, dark mode, sliders
+├── css/              # Stylesheets
+└── storage/          # Uploaded files (images, avatars)</code></pre>
+</div>
+
+<!-- 10. JAVASCRIPT FUNCTIONS -->
+<div class="page page-break" id="javascript">
+    <div class="section-header">
+        <span class="section-num">PART 10</span>
+        <h2 style="border: none; margin: 0;">JavaScript Functions</h2>
+    </div>
+    
+    <h3>cart.js (jQuery)</h3>
+    <table>
+        <thead>
+            <tr><th>Function</th><th>Event</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>updateSummary()</code></td>
+                <td>Helper</td>
+                <td>Updates subtotal and total in cart summary</td>
+            </tr>
+            <tr>
+                <td><code>increase</code></td>
+                <td>Click</td>
+                <td>Increases quantity via AJAX PUT</td>
+            </tr>
+            <tr>
+                <td><code>decrease</code></td>
+                <td>Click</td>
+                <td>Decreases quantity via AJAX PUT</td>
+            </tr>
+            <tr>
+                <td><code>delete-btn</code></td>
+                <td>Click</td>
+                <td>Removes item from cart via AJAX DELETE</td>
+            </tr>
+            <tr>
+                <td><code>clear-cart</code></td>
+                <td>Click</td>
+                <td>Clears entire cart via AJAX POST</td>
+            </tr>
+            <tr>
+                <td><code>updateNavbarCartCount()</code></td>
+                <td>Helper</td>
+                <td>Updates cart badge count in navbar</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>home.js (Vanilla JS)</h3>
+    <table>
+        <thead>
+            <tr><th>Function</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>updateClock()</code></td>
+                <td>Digital clock updating every second</td>
+            </tr>
+            <tr>
+                <td><code>initializeProductTimers()</code></td>
+                <td>Countdown timers for discounted products</td>
+            </tr>
+            <tr>
+                <td><code>showSlide()</code></td>
+                <td>Ads slider navigation</td>
+            </tr>
+            <tr>
+                <td><code>dark-mode-toggle</code></td>
+                <td>Toggle dark theme class on body</td>
+            </tr>
+            <tr>
+                <td><code>Swiper (homeSlider)</code></td>
+                <td>Home page hero slider with autoplay</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>Rating System (Inline JS)</h3>
+    <div class="info-box">
+        <p><strong>Frontend:</strong> Star rating with hover effects and click handlers submitting to <code>/product/{id}/rate</code></p>
+        <p><strong>Backend:</strong> Returns JSON: <code>{"success": true, "message": "تم إضافة تقييمك ⭐", "average": 4.5}</code></p>
+        <p><strong>DOM Update:</strong> Updates `.average-rating` element with new average</p>
+    </div>
+</div>
+
+<!-- DEPENDENCIES & SETUP -->
+<div class="page">
+    <div class="section-header">
+        <span class="section-num">APPENDIX</span>
+        <h2 style="border: none; margin: 0;">Setup & Dependencies</h2>
+    </div>
+    
+    <h3>Required Packages</h3>
+    <pre><code>composer require laravel/socialite  # For social login</code></pre>
+    
+    <h3>Required Configuration</h3>
+    <p>In <code>config/services.php</code>, add OAuth credentials:</p>
+    <pre><code>'google' => [
+    'client_id' => env('GOOGLE_CLIENT_ID'),
+    'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+    'redirect' => env('APP_URL').'/auth/google/callback',
+],
+'facebook' => [...],
+'twitter' => [...],
+'apple' => [...],</code></pre>
+    
+    <h3>Database Migrations</h3>
+    <div class="info-box warning">
+        <p><strong>Important:</strong> After adding social login, run:</p>
+        <code>php artisan migrate</code>
+    </div>
+    
+    <h3>Storage Setup</h3>
+    <pre><code>php artisan storage:link  # Create storage link in public/</code></pre>
+    
+    <h3>Key Files Reference</h3>
+    <table>
+        <thead>
+            <tr><th>File</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><code>app/Http/Controllers/SocialLoginController.php</code></td><td>OAuth handlers</td></tr>
+            <tr><td><code>database/migrations/*provider*.php</code></td><td>Customer provider columns</td></tr>
+            <tr><td><code>resources/views/show/auth/login.blade.php</code></td><td>Social login buttons</td></tr>
+            <tr><td><code>routes/web.php</code></td><td>Social auth routes</td></tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

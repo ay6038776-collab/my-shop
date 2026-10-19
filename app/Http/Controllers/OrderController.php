@@ -7,20 +7,28 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Cart;
+use App\Services\InvoiceService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-    // 🔹 عرض الطلبات للأدمن
+    protected $invoiceService;
+
+    public function __construct(InvoiceService $invoiceService)
+    {
+        $this->invoiceService = $invoiceService;
+    }
+
+    // عرض الطلبات للأدمن
     public function index()
     {
         $orders = Order::with(['customer', 'items.product'])->latest()->get();
         return view('admin.orders.index', compact('orders'));
     }
 
-    // 🔹 عرض الطلبات الخاصة بالعميل (بنفس نظام الكارت)
+    // عرض الطلبات الخاصة بالعميل
     public function myOrders()
     {
         $customerId = Auth::guard('customer')->id();
@@ -38,7 +46,17 @@ class OrderController extends Controller
         return view('show.orders.index', compact('orders'));
     }
 
-    // 🔹 حفظ الطلب من صفحة الـ Checkout (بنفس نظام الكارت)
+    // تحميل الفاتورة PDF
+    public function downloadInvoice($id)
+    {
+        $order = Order::with(['customer', 'items.product'])
+            ->where('customer_id', Auth::guard('customer')->id())
+            ->findOrFail($id);
+
+        return $this->invoiceService->generateInvoice($order);
+    }
+
+    // حفظ الطلب من صفحة الـ Checkout
     public function store(Request $request)
     {
         $customerId = Auth::guard('customer')->id();
@@ -61,20 +79,21 @@ class OrderController extends Controller
             ->get();
 
         if ($cartItems->isEmpty()) {
-            return back()->with('error', '🛒 السلة فارغة، أضف منتجات أولاً.');
+            return back()->with('error', 'السلة فارغة، أضف منتجات أولاً.');
         }
 
-        // 🟩 إنشاء الطلب الرئيسي
+        // إنشاء الطلب الرئيسي
         $order = Order::create([
             'customer_id'  => $customerId,
             'order_number' => uniqid('ORD-'),
             'status'       => 'pending',
             'total_price'  => 0,
+            'payment_method' => $request->payment_method,
         ]);
 
         $total = 0;
 
-        // 🟩 إنشاء عناصر الطلب مع حفظ اللون
+        // إنشاء عناصر الطلب مع حفظ اللون
         foreach ($cartItems as $item) {
             if ($item->product) {
                 $linePrice = $item->product->price * $item->quantity;
@@ -85,63 +104,72 @@ class OrderController extends Controller
                     'product_id'  => $item->product->id,
                     'quantity'    => $item->quantity,
                     'price'       => $item->product->price,
-                    'color'       => $item->color, // اللون هنا
+                    'color'       => $item->color,
                 ]);
             }
         }
 
-        // 🟢 تحديث إجمالي الطلب
+        // تحديث إجمالي الطلب + الشحن
         $order->update([
-            'total_price' => $total,
+            'total_price' => $total + 50,
         ]);
 
-        // 🗑 مسح السلة بعد إنشاء الطلب
+        // إشعار للأدمن بطلب جديد
+        $admin = Auth::guard('admin')->user();
+        if ($admin) {
+            $admin->notify(new \App\Notifications\OrderPlaced($order));
+        }
+
+        // مسح السلة بعد إنشاء الطلب
         Cart::where('customer_id', $customerId)->delete();
 
         return redirect()->route('customer.orders')
-            ->with('success', '✅ تم تأكيد الطلب بنجاح!');
+            ->with('success', 'تم تأكيد الطلب بنجاح!');
     }
 
-    public function approve($id)
-    {
-        DB::transaction(function () use ($id) {
+   public function approve($id)
+{
+    $order = Order::with('items.product')->findOrFail($id);
 
-            $order = Order::with('items.product')
-                ->lockForUpdate()
-                ->findOrFail($id);
+    DB::transaction(function () use ($order) {
 
-            // منع التكرار
-            if ($order->status !== 'pending') {
-                abort(403, '❌ الطلب تم التعامل معه من قبل');
+        $order->refresh();
+
+        if ($order->status !== 'pending') {
+            abort(403, 'الطلب تم التعامل معه من قبل');
+        }
+
+        foreach ($order->items as $item) {
+
+            if (!$item->product) {
+                throw new \Exception('المنتج غير موجود');
             }
 
-            // التحقق من المخزون
-            foreach ($order->items as $item) {
-                if (!$item->product) {
-                    throw new \Exception('❌ المنتج غير موجود');
-                }
-
-                if ($item->product->stock < $item->quantity) {
-                    throw new \Exception(
-                        '❌ الكمية غير متوفرة للمنتج: ' . $item->product->name
-                    );
-                }
+            if ($item->product->stock < $item->quantity) {
+                throw new \Exception(
+                    'الكمية غير متوفرة للمنتج: ' . $item->product->name
+                );
             }
+        }
 
-            // خصم المخزون
-            foreach ($order->items as $item) {
-                $item->product->decrement('stock', $item->quantity);
-            }
+        foreach ($order->items as $item) {
+            $item->product->decrement('stock', $item->quantity);
+        }
 
-            // تحديث حالة الطلب + إيقاف العداد
-            $order->update([
-                'status' => 'approved',
-                'timer_active' => 0,
-                'expires_at' => null
-            ]);
-        });
+        $order->update([
+            'status' => 'approved',
+            'timer_active' => 0,
+            'expires_at' => null
+        ]);
+    });
 
-        return back()->with('success', '✅ تم اعتماد الطلب وخصم المخزون وإيقاف العداد بنجاح');
+        // إشعار بالقبول
+        $admin = Auth::guard('admin')->user();
+        if ($admin) {
+            $admin->notify(new \App\Notifications\OrderApproved($order));
+        }
+
+        return back()->with('success', 'تم اعتماد الطلب بنجاح');
     }
 
     public function reject($id)
@@ -158,6 +186,12 @@ class OrderController extends Controller
             'expires_at' => null
         ]);
 
-        return back()->with('info', '❌ تم رفض الطلب وإيقاف العداد');
+        // إشعار بالرفض
+        $admin = Auth::guard('admin')->user();
+        if ($admin) {
+            $admin->notify(new \App\Notifications\OrderRejected($order));
+        }
+
+        return back()->with('info', 'تم رفض الطلب');
     }
 }

@@ -212,3 +212,261 @@
 .loader::after {
   animation: scan 2s ease 1.5;
 }
+
+/* المتغيرات للتحكم السهل في الألوان */
+:root {
+    --ticker-bg: rgba(15, 15, 15, 0.85);
+    --accent-color: #00d2ff; /* لون سماوي مودرن - تقدر تغيره لـ #e44d26 لو تحب */
+    --text-main: #ffffff;
+    --text-dim: #a0a0a0;
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+.ticker-wrapper {
+    width: 100%;
+    background: var(--ticker-bg);
+    backdrop-filter: blur(12px); /* تأثير الزجاج */
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    height: 60px;
+    position: relative;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* التسمية الجانبية بشكل مائل واحترافي */
+.ticker-label {
+    background: linear-gradient(135deg, var(--accent-color), #3a7bd5);
+    color: #fff;
+    font-weight: 800;
+    font-size: 12px;
+    text-transform: uppercase;
+    padding: 0 25px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+    letter-spacing: 1.5px;
+    clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%); /* شكل مائل عصري */
+}
+
+.ticker-track {
+    display: flex;
+    align-items: center;
+    animation: tickerScroll 200s linear infinite; /* سرعة منطقية أكتر */
+    white-space: nowrap;
+}
+
+.ticker-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes tickerScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.ticker-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 30px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-right: 1px solid rgba(255,255,255,0.05);
+}
+
+.ticker-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-2px);
+}
+
+.ticker-img {
+    width: 38px;
+    height: 38px;
+    object-fit: cover;
+    border-radius: 50%; /* صور دائرية لمظهر أحدث */
+    border: 2px solid var(--accent-color);
+    padding: 2px;
+}
+
+.ticker-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.ticker-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.ticker-price {
+    font-size: 11px;
+    color: var(--accent-color);
+    font-family: 'Courier New', Courier, monospace; /* مظهر تقني للأسعار */
+}
+
+.ticker-badge {
+    background: rgba(255, 255, 255, 0.1);
+    color: #00ff88; /* لون النجاح/الخصم */
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 20px;
+    margin-left: 5px;
+    border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+/* إخفاء السكرول بار في المتصفحات */
+::-webkit-scrollbar { display: none; }
+
+
+
+.homeSlider{
+    margin:35px auto;
+    border-radius:25px;
+    overflow:hidden;
+}
+
+.hero-banner{
+
+    min-height:360px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:60px;
+
+    background:linear-gradient(135deg,#0f172a,#1d4ed8);
+
+    color:#fff;
+}
+
+.hero-text{
+    width:50%;
+}
+
+.sale{
+
+    display:inline-block;
+
+    padding:8px 18px;
+
+    background:#ef4444;
+
+    border-radius:50px;
+
+    font-weight:bold;
+
+    margin-bottom:20px;
+}
+
+.hero-text h1{
+
+    font-size:50px;
+
+    font-weight:800;
+
+    margin-bottom:20px;
+}
+
+.old-price{
+
+    color:#ddd;
+
+    text-decoration:line-through;
+}
+
+.hero-text h2{
+
+    font-size:42px;
+
+    margin-bottom:30px;
+}
+
+.shop-btn{
+
+    display:inline-block;
+
+    padding:14px 35px;
+
+    background:#fff;
+
+    color:#111;
+
+    text-decoration:none;
+
+    border-radius:40px;
+
+    font-weight:bold;
+}
+
+.hero-image{
+
+    width:360px;
+
+    height:360px;
+
+    object-fit:contain;
+
+    transition:.4s;
+}
+
+.hero-image:hover{
+
+    transform:scale(1.05);
+}
+
+.swiper-button-next,
+.swiper-button-prev{
+
+    color:#fff;
+}
+
+.swiper-pagination-bullet{
+
+    background:#fff;
+}
+
+@media(max-width:768px){
+
+.hero-banner{
+
+flex-direction:column;
+
+text-align:center;
+
+padding:30px;
+}
+
+.hero-text{
+
+width:100%;
+}
+
+.hero-text h1{
+
+font-size:30px;
+}
+
+.hero-text h2{
+
+font-size:28px;
+}
+
+.hero-image{
+
+width:220px;
+
+height:220px;
+
+margin-top:20px;
+}
+
+}

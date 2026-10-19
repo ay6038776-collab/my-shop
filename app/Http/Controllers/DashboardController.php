@@ -3,44 +3,70 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\User; // لموظفين أو المدراء
+use App\Models\Customer;
+use App\Models\Order;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $admin = Auth::user();
+        $admin = Auth::guard('admin')->user();
 
-        // عدد المنتجات
+        // Stats
         $productsCount = Product::count();
-
-        // إجمالي الأسعار
+        $customersCount = Customer::count();
+        $ordersCount = Order::count();
+        $ordersPending = Order::where('status', 'pending')->count();
+        $ordersApproved = Order::where('status', 'approved')->count();
+        $totalRevenue = Order::where('status', 'approved')->sum('total_price');
         $totalValue = Product::sum('price');
 
-        // أحدث المنتجات (آخر 300 منتج)
-        $latestProducts = Product::orderBy('created_at', 'desc')->take(300)->get();
+        // Recent Products
+        $latestProducts = Product::orderBy('created_at', 'desc')->take(10)->get();
 
-        // عدد الموظفين
-        $employeesCount = User::count(); // لو الموظفين مخزنين في جدول users
+        // Recent Orders
+        $recentOrders = Order::with(['customer', 'items.product'])
+            ->orderBy('created_at', 'desc')
+            ->take(10)
+            ->get();
 
-        // قائمة الموظفين (أسمائهم، إيميل، أدوارهم، ساعات العمل)
-        $employees = User::with('roles')->get(); // تأكد إن عندك علاقة roles لو في system صلاحيات
+        // Low Stock Products
+        $lowStockProducts = Product::where('stock', '<', 5)
+            ->where('stock', '>', 0)
+            ->orderBy('stock', 'asc')
+            ->take(5)
+            ->get();
 
-        // الإشعارات الجديدة للـ Admin
-        $notifications = $admin->unreadNotifications->filter(function($notification){
-            return $notification->type == 'App\Notifications\OrderExpired'
-                || $notification->type == 'App\Notifications\OrderCreated';
-        })->sortByDesc('created_at');
+        // Monthly Orders (last 6 months)
+        $monthlyOrders = Order::where('created_at', '>=', Carbon::now()->subMonths(6))
+            ->selectRaw("DATE_FORMAT(created_at, '%Y-%m') as month, COUNT(*) as count, SUM(total_price) as revenue")
+            ->groupBy('month')
+            ->orderBy('month', 'asc')
+            ->get();
 
-        // إرجاع البيانات للـ View
+        // Notifications
+        $notifications = $admin->unreadNotifications
+            ->sortByDesc('created_at')
+            ->take(5);
+        $notificationsCount = $admin->unreadNotifications()->count();
+
         return view('admin.index', compact(
             'productsCount',
+            'customersCount',
+            'ordersCount',
+            'ordersPending',
+            'ordersApproved',
+            'totalRevenue',
             'totalValue',
             'latestProducts',
+            'recentOrders',
+            'lowStockProducts',
+            'monthlyOrders',
             'notifications',
-            'employeesCount',
-            'employees'
+            'notificationsCount'
         ));
     }
 }

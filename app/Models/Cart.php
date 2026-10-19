@@ -42,11 +42,13 @@ class Cart extends Model
             'ذهبي' => 'gold',
             'بيج' => 'beige',
             'عنابي' => 'maroon',
-            'كريمي' => 'cream',
+            'كريمي' => '#FFFDD0', // Cream
             'فيروزي' => 'turquoise',
             'نيلي' => 'indigo',
             'لافندر' => 'lavender',
-            'كهرماني' => 'amber',
+            'كهرماني' => '#FFBF00', // Amber
+
+
             
            
             // الألوان الإنجليزية
@@ -56,6 +58,25 @@ class Cart extends Model
             'green' => 'green',
             'yellow' => 'yellow',
             'white' => 'white',
+            'pink' => 'pink',
+            'purple' => 'purple',
+            'orange' => 'orange',
+            'gray' => 'gray',
+            'brown' => 'brown',
+            'navy' => 'navy',
+            'teal' => 'teal', 
+            'lavender' => 'lavender',
+            'olive' => 'olive',
+            'silver' => 'silver',
+            'gold' => 'gold',
+            'beige' => 'beige',
+            'maroon' => 'maroon',
+            'cream' => '#FFFDD0', // Cream
+            'turquoise' => 'turquoise',
+            'indigo' => 'indigo',
+            'amber' => '#FFBF00', // Amber
+
+
         ];
 
         return $map[$color] ?? 'transparent';

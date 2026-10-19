@@ -1,259 +1,525 @@
 @extends('layouts.app')
+@section('title', 'Complaint Details - My Shop Admin')
 
-@section('title', 'Complaint Details')
-
-@section('content')
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint #{{ $complaint->id }} - My Shop Admin</title>
+    <link rel="icon" href="{{ asset('MYshop5.png') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
 
 <style>
-body {
-  background: linear-gradient(135deg, #1e3a8a, #0f172a);
-  font-family: 'Poppins', sans-serif;
-  color: #fff;
-  overflow-x: hidden;
+:root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --dark: #1e293b;
+    --gray: #64748b;
+    --light-gray: #e2e8f0;
+    --bg: #f1f5f9;
+    --white: #ffffff;
+    --border: #e2e8f0;
 }
 
-/* ===== الصفحة ===== */
-.page-content {
-  position: relative;
-  min-height: 100vh;
-  padding: 60px 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--dark); }
+
+/* Topbar */
+.topbar {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    padding: 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
 }
 
-/* ===== الكارت ===== */
-.card {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.25);
-  width: 100%;
-  max-width: 750px;
-  padding: 30px;
-  transition: 0.4s;
-  animation: fadeInUp 0.6s ease;
+.brand { display: flex; align-items: center; gap: 14px; }
+.brand img { width: 44px; height: 44px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+.brand h2 { font-size: 1.2rem; font-weight: 700; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+
+.back-btn {
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(10px);
 }
 
-/* ===== مراحل العرض ===== */
-.steps {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 30px;
-  position: relative;
-}
-.steps::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 5%;
-  right: 5%;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.15);
-  z-index: 0;
-  transform: translateY(-50%);
-}
-.step {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  width: 25%;
-}
-.step .circle {
-  width: 36px;
-  height: 36px;
-  margin: 0 auto 8px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #a5b4fc;
-  font-weight: 600;
-  transition: 0.3s;
-}
-.step.active .circle {
-  background: linear-gradient(135deg, #60a5fa, #2563eb);
-  color: #fff;
-  box-shadow: 0 0 15px rgba(96,165,250,0.5);
-}
-.step small {
-  color: #cbd5e1;
-  font-size: 13px;
+.back-btn:hover {
+    background: rgba(255,255,255,0.25);
+    transform: translateY(-2px);
 }
 
-/* ===== المحتوى ===== */
-.stage {
-  display: none;
-  animation: fadeIn 0.5s ease;
-}
-.stage.active {
-  display: block;
+/* Main Content */
+.main { padding: 28px 32px; max-width: 900px; margin: 0 auto; }
+
+/* Breadcrumb */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+    font-size: 0.85rem;
 }
 
-label {
-  font-weight: 600;
-  color: #cbd5e1;
-}
-p {
-  background: rgba(255,255,255,0.08);
-  padding: 12px 15px;
-  border-radius: 10px;
-  color: #f1f5f9;
+.breadcrumb a {
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
-/* ===== الأزرار ===== */
-.btn-nav {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  border: none;
-  color: #fff;
-  padding: 10px 25px;
-  border-radius: 10px;
-  transition: 0.3s;
-  font-weight: 600;
-}
-.btn-nav:hover {
-  opacity: 0.9;
-  transform: translateY(-2px);
-}
-.btn-nav:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
+.breadcrumb a:hover { color: var(--primary); }
+
+.breadcrumb span { color: var(--dark); font-weight: 500; }
+.breadcrumb i { font-size: 0.7rem; color: var(--light-gray); }
+
+/* Page Header */
+.page-header {
+    margin-bottom: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
 }
 
-/* ===== حركات ===== */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+.page-header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
+
+.page-header h1 i {
+    color: var(--primary);
+}
+
+.page-header p { color: var(--gray); font-size: 0.92rem; }
+
+/* Detail Card */
+.detail-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.06);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin-bottom: 24px;
+    animation: fadeInUp 0.5s ease;
+}
+
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== الموبايل ===== */
-@media(max-width: 768px) {
-  .steps small { font-size: 11px; }
-  .btn-nav { font-size: 13px; padding: 8px 18px; }
+.card-header {
+    padding: 24px 28px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+}
+
+.card-header h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-header .complaint-id-badge {
+    background: rgba(255,255,255,0.2);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.card-body { padding: 28px; }
+
+/* Sender Section */
+.sender-section {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 28px;
+    padding-bottom: 28px;
+    border-bottom: 1px dashed var(--border);
+}
+
+.sender-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.6rem;
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+    flex-shrink: 0;
+}
+
+.sender-details { flex: 1; }
+
+.sender-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 4px;
+}
+
+.sender-email {
+    font-size: 0.92rem;
+    color: var(--gray);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sender-email i { color: var(--primary); }
+
+.sender-meta {
+    display: flex;
+    gap: 20px;
+    margin-top: 12px;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    color: var(--gray);
+}
+
+.meta-item i { color: var(--primary); font-size: 0.8rem; }
+
+/* Info Grid */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+@media (max-width: 600px) {
+    .info-grid { grid-template-columns: 1fr; }
+}
+
+.info-box {
+    background: var(--bg);
+    border-radius: 14px;
+    padding: 18px;
+    border-left: 4px solid var(--primary);
+}
+
+.info-box.full-width { grid-column: 1 / -1; }
+
+.info-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.info-label i { color: var(--primary); }
+
+.info-value {
+    font-size: 0.95rem;
+    color: var(--dark);
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+/* Message Box */
+.message-box {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-radius: 16px;
+    padding: 24px;
+    border-left: 5px solid var(--warning);
+    margin-bottom: 24px;
+}
+
+.message-box .info-label { color: #92400e; margin-bottom: 10px; }
+.message-box .info-label i { color: #f59e0b; }
+.message-box .info-value { color: #78350f; font-size: 1rem; line-height: 1.7; white-space: pre-wrap; }
+
+/* Actions */
+.card-actions {
+    padding: 20px 28px;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.action-left {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.action-right { display: flex; gap: 12px; }
+
+.btn {
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+}
+
+.btn-view {
+    background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+    color: var(--primary-dark);
+}
+
+.btn-view:hover {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+}
+
+.btn-delete {
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    color: #dc2626;
+}
+
+.btn-delete:hover {
+    background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.35);
+}
+
+.btn-back {
+    background: white;
+    color: var(--gray);
+    border: 1px solid var(--border);
+}
+
+.btn-back:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+/* Status Badge */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.status-badge.pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status-badge.resolved {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .topbar { padding: 14px 20px; }
+    .main { padding: 20px; }
+    .sender-section { flex-direction: column; align-items: center; text-align: center; }
+    .sender-meta { justify-content: center; }
+    .card-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+    .card-actions { flex-direction: column; }
+    .action-left, .action-right { width: 100%; justify-content: center; }
+    .btn { flex: 1; justify-content: center; }
 }
 </style>
 
-<div class="page-content">
-  <div class="card">
-
-    <!-- مراحل التقدم -->
-    <div class="steps">
-      <div class="step" data-step="1">
-        <div class="circle">1</div>
-        <small>Sender Info</small>
-      </div>
-      <div class="step" data-step="2">
-        <div class="circle">2</div>
-        <small>Complaint</small>
-      </div>
-      <div class="step" data-step="3">
-        <div class="circle">3</div>
-        <small>Status</small>
-      </div>
-      <div class="step" data-step="4">
-        <div class="circle">4</div>
-        <small>Finish</small>
-      </div>
+@section('content')
+<!-- TOPBAR -->
+<div class="topbar">
+    <div class="brand">
+        <img src="{{ asset('MYshop5.png') }}" alt="My Shop">
+        <h2>My Shop Admin</h2>
     </div>
-
-    <!-- المرحلة 1 -->
-    <div class="stage active" data-stage="1">
-      <h4 class="mb-3">👤 Sender Information</h4>
-      <label>Name:</label>
-      <p>{{ $complaint->name }}</p>
-
-      <label>Email:</label>
-      <p>{{ $complaint->email }}</p>
-    </div>
-
-    <!-- المرحلة 2 -->
-    <div class="stage" data-stage="2">
-      <h4 class="mb-3">📝 Complaint Content</h4>
-      <label>Subject:</label>
-      <p>{{ $complaint->subject }}</p>
-
-      <label>Message:</label>
-      <p>{{ $complaint->message }}</p>
-    </div>
-
-    <!-- المرحلة 3 -->
-    <div class="stage" data-stage="3">
-      <h4 class="mb-3">📊 Complaint Status</h4>
-      <label>Status:</label>
-      <p>
-        {{ $complaint->status ?? 'Pending Review' }}
-      </p>
-
-      <label>Created At:</label>
-      <p>{{ $complaint->created_at->format('Y-m-d H:i') }}</p>
-    </div>
-
-    <!-- المرحلة 4 -->
-    <div class="stage" data-stage="4">
-      <h4 class="mb-4">✅ Review Complete</h4>
-      <p>All complaint details have been reviewed successfully.</p>
-
-      <div class="text-center mt-4">
-        <a href="{{ route('admin.complaints.index') }}" class="btn-nav">
-          <i class="bi bi-arrow-left"></i> Back to Complaints
-        </a>
-      </div>
-    </div>
-
-    <!-- أزرار التنقل -->
-    <div class="d-flex justify-content-between mt-4">
-      <button class="btn-nav" id="prevBtn" disabled>← Previous</button>
-      <button class="btn-nav" id="nextBtn">Next →</button>
-    </div>
-
-  </div>
+    <a href="{{ route('admin.complaints.index') }}" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Complaints
+    </a>
 </div>
 
-<!-- سكريبت التفاعل -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const stages = document.querySelectorAll(".stage");
-  const steps = document.querySelectorAll(".step");
-  let current = 0;
+<!-- MAIN -->
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="{{ url('admin/index') }}">Dashboard</a>
+        <i class="fa-solid fa-chevron-right"></i>
+        <a href="{{ route('admin.complaints.index') }}">Complaints</a>
+        <i class="fa-solid fa-chevron-right"></i>
+        <span>#{{ $complaint->id }}</span>
+    </div>
 
-  const prevBtn = document.getElementById("prevBtn");
-  const nextBtn = document.getElementById("nextBtn");
+    <!-- Page Header -->
+    <div class="page-header">
+        <div>
+            <h1><i class="fa-solid fa-envelope-open-text"></i> Complaint #{{ $complaint->id }}</h1>
+            <p>Review customer complaint details and take action</p>
+        </div>
+        <div class="status-badge pending">
+            <i class="fa-solid fa-clock"></i>
+            {{ $complaint->status ?? 'Pending Review' }}
+        </div>
+    </div>
 
-  function updateSteps() {
-    steps.forEach((s, i) => {
-      s.classList.toggle("active", i <= current);
-    });
-    stages.forEach((stg, i) => {
-      stg.classList.toggle("active", i === current);
-    });
-    prevBtn.disabled = current === 0;
-    nextBtn.textContent = current === stages.length - 1 ? "Finish" : "Next →";
-  }
+    <!-- Detail Card -->
+    <div class="detail-card">
+        <div class="card-header">
+            <h3>
+                <i class="fa-solid fa-user-circle"></i>
+                Complaint Details
+            </h3>
+            <span class="complaint-id-badge">
+                <i class="fa-solid fa-hashtag"></i>
+                {{ $complaint->id }}
+            </span>
+        </div>
 
-  nextBtn.addEventListener("click", () => {
-    if (current < stages.length - 1) {
-      current++;
-      updateSteps();
-    } else {
-      nextBtn.disabled = true;
-    }
-  });
+        <div class="card-body">
+            <!-- Sender Info -->
+            <div class="sender-section">
+                <div class="sender-avatar">
+                    {{ strtoupper(substr($complaint->name, 0, 1)) }}
+                </div>
+                <div class="sender-details">
+                    <div class="sender-name">{{ $complaint->name }}</div>
+                    <div class="sender-email">
+                        <i class="fa-solid fa-envelope"></i>
+                        {{ $complaint->email }}
+                    </div>
+                    <div class="sender-meta">
+                        <div class="meta-item">
+                            <i class="fa-solid fa-calendar"></i>
+                            {{ $complaint->created_at->format('M d, Y') }}
+                        </div>
+                        <div class="meta-item">
+                            <i class="fa-solid fa-clock"></i>
+                            {{ $complaint->created_at->format('H:i') }}
+                        </div>
+                        <div class="meta-item">
+                            <i class="fa-solid fa-hourglass-half"></i>
+                            {{ $complaint->created_at->diffForHumans() }}
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-  prevBtn.addEventListener("click", () => {
-    if (current > 0) {
-      current--;
-      updateSteps();
-    }
-  });
+            <!-- Subject & Message -->
+            <div class="info-grid">
+                <div class="info-box">
+                    <div class="info-label">
+                        <i class="fa-solid fa-tag"></i>
+                        Subject
+                    </div>
+                    <div class="info-value">{{ $complaint->subject }}</div>
+                </div>
 
-  updateSteps();
-});
-</script>
+                <div class="info-box">
+                    <div class="info-label">
+                        <i class="fa-solid fa-flag"></i>
+                        Status
+                    </div>
+                    <div class="info-value">
+                        @if($complaint->status == 'resolved')
+                            <span class="status-badge resolved">
+                                <i class="fa-solid fa-check-circle"></i>
+                                Resolved
+                            </span>
+                        @else
+                            <span class="status-badge pending">
+                                <i class="fa-solid fa-clock"></i>
+                                Pending Review
+                            </span>
+                        @endif
+                    </div>
+                </div>
+            </div>
 
+            <!-- Message -->
+            <div class="message-box">
+                <div class="info-label">
+                    <i class="fa-solid fa-comment-dots"></i>
+                    Message Content
+                </div>
+                <div class="info-value">{{ $complaint->message }}</div>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="card-actions">
+            <div class="action-left">
+                <a href="{{ route('admin.complaints.index') }}" class="btn btn-back">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Back to List
+                </a>
+            </div>
+            <div class="action-right">
+                <a href="{{ route('admin.complaints.index') }}" class="btn btn-view">
+                    <i class="fa-solid fa-list"></i>
+                    All Complaints
+                </a>
+                <form method="POST" action="{{ route('admin.complaints.destroy', $complaint->id) }}" style="display:inline;">
+                    @csrf @method('DELETE')
+                    <button type="submit" class="btn btn-delete" onclick="return confirm('Delete this complaint?')">
+                        <i class="fa-solid fa-trash"></i>
+                        Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

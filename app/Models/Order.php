@@ -18,7 +18,7 @@ class Order extends Model
         'notes',
         'expires_at',
         'is_expired',
-        
+        'payment_method',
     ];
 
     protected $casts = [
@@ -65,5 +65,10 @@ class Order extends Model
     public function items()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function getTotalPrice()
+    {
+        return number_format($this->total_price, 0);
     }
 }

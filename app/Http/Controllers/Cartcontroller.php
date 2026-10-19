@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use App\Models\Cart;
 use App\Models\Product;
 
@@ -22,25 +23,58 @@ class CartController extends Controller
                          ->with('product')
                          ->get();
 
-        // 🔹 تصحيح اللون فقط
-       foreach ($cartItems as $item) {
-    $colorMap = [
-        'أسود'  => 'black',
-        'black' => 'black',
-        'أبيض'  => 'white',
-        'white' => 'white',
-        'أحمر'  => 'red',
-        'red'   => 'red',
-        'أزرق'  => 'blue',
-        'blue'  => 'blue',
-        'أخضر'  => 'green',
-        'green' => 'green',
-        'أصفر'  => 'yellow',
-        'yellow'=> 'yellow',
-    ];
-
-    $item->css_color = $colorMap[trim(strtolower($item->color ?? ''))] ?? 'transparent';
-}
+        foreach ($cartItems as $item) {
+            $colorMap = [
+                'أسود'  => 'black',
+                'black' => 'black',
+                'أبيض'  => 'white',
+                'white' => 'white',
+                'أحمر'  => 'red',
+                'red'   => 'red',
+                'أزرق'  => 'blue',
+                'blue'  => 'blue',
+                'أخضر'  => 'green',
+                'green' => 'green',
+                'أصفر'  => 'yellow',
+                'yellow'=> 'yellow',
+                'برتقالي'=> 'orange',
+                'orange'=> 'orange',
+                'بنفسجي'=> 'purple',
+                'purple'=> 'purple',
+                'وردي'  => 'pink',      
+                'زهري' => 'pink',
+                'رمادي' => 'gray',
+                'gray'  => 'gray',
+                'بني'  => 'brown',
+                'brown' => 'brown',
+                'كحلي' => 'navy',
+                'navy'  => 'navy',
+                'تركواز'=> 'turquoise',
+                'turquoise'=> 'turquoise',
+                'لافندر'=> 'lavender',
+                'lavender'=> 'lavender',
+                'زيتي' => 'olive',
+                'olive' => 'olive',
+                'فضي'  => 'silver',
+                'silver'=> 'silver',
+                'ذهبي' => 'gold',
+                'gold'  => 'gold',
+                'بيج'  => 'beige',
+                'beige' => 'beige',
+                'عنابي'=> 'maroon',
+                'maroon'=> 'maroon',
+                'كريمي'=> 'cream',
+                'cream' => '#FFFDD0',
+                'فيروزي'=> 'turquoise',
+                'turquoise'=> 'turquoise',
+                'نيلي' => 'indigo',
+                'indigo'=> 'indigo',
+                'كهرماني'=> 'amber',
+                'amber' => '#FFBF00',
+                
+            ];
+            $item->css_color = $colorMap[trim(strtolower($item->color ?? ''))] ?? 'transparent';
+        }
 
         $subtotal = $cartItems->sum(fn($item) => $item->product->discounted_price * $item->quantity);
 
@@ -50,7 +84,16 @@ class CartController extends Controller
     // إضافة منتج للسلة مع اللون
     public function add(Request $request, $id)
     {
+        Log::info('Cart Add Request', [
+            'product_id' => $id,
+            'all_input' => $request->all(),
+            'content_type' => $request->header('Content-Type'),
+        ]);
+
         $customerId = Auth::guard('customer')->id();
+        
+        Log::info('Customer ID', ['customer_id' => $customerId]);
+        
         if (!$customerId) {
             return response()->json([
                 'error'=>'login_required',
@@ -61,9 +104,16 @@ class CartController extends Controller
         $product = Product::findOrFail($id);
         $finalPrice = $product->discounted_price;
 
-        // 🔹 لا تغيير – اللون كما هو
-        $color = $request->input('color') ?: 'N/A';
+        // Color from request
+        $color = $request->input('color');
+        
+        Log::info('Color received', ['color' => $color]);
+        
+        if (empty($color)) {
+            $color = 'N/A';
+        }
 
+        // Check if item already exists
         $cartItem = Cart::where('customer_id', $customerId)
                         ->where('product_id', $id)
                         ->where('color', $color)
@@ -72,14 +122,16 @@ class CartController extends Controller
         if ($cartItem) {
             $cartItem->quantity += 1;
             $cartItem->save();
+            Log::info('Updated existing cart item', ['cart_item_id' => $cartItem->id, 'new_quantity' => $cartItem->quantity]);
         } else {
             Cart::create([
                 'customer_id' => $customerId,
                 'product_id'  => $id,
-                'price'       => $finalPrice,
-                'quantity'    => 1,
-                'color'       => $color
+                'price'      => $finalPrice,
+                'quantity'   => 1,
+                'color'      => $color
             ]);
+            Log::info('Created new cart item', ['product_id' => $id, 'color' => $color]);
         }
 
         $cartCount = Cart::where('customer_id', $customerId)->sum('quantity');

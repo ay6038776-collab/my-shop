@@ -324,3 +324,57 @@ body {
   height: 220px;
   opacity: 1;
 }
+/* تنسيق الصور الصغيرة للموبايل */
+.mobile-thumb {
+    width: 70px !important;
+    height: 70px !important;
+    object-fit: cover;
+    flex-shrink: 0; /* بيمنع الصورة إنها تصغر أو تختفي */
+    border: 2px solid transparent;
+    cursor: pointer;
+    background: #f5f5f7;
+    transition: all 0.3s ease;
+}
+
+.mobile-thumb:active, .mobile-thumb.active {
+    border-color: #ff0000; /* لون التحديد عند الضغط */
+    transform: scale(0.95);
+}
+
+/* تحسين حاوية التمرير للموبايل */
+.overflow-auto {
+    scrollbar-width: none; /* إخفاء السكرول بار في فايرفوكس */
+    -ms-overflow-style: none; /* إخفاء السكرول بار في IE */
+}
+
+.overflow-auto::-webkit-scrollbar {
+    display: none; /* إخفاء السكرول بار في كروم وسفاري */
+}
+
+@media (max-width: 768px) {
+    .main-image-viewport {
+        height: 350px !important; /* تقليل حجم الصورة الكبيرة عشان الصور الصغيرة تظهر تحتها علطول */
+        width: 100% !important;
+    }
+    
+    .main-image-viewport img {
+        max-height: 80% !important;
+    }
+}
+.mobile-thumb {
+    width: 65px !important;
+    height: 65px !important;
+    object-fit: cover;
+    flex-shrink: 0;
+    border-radius: 12px; /* حواف أنعم */
+    border: 2px solid transparent; 
+    transition: var(--transition-smooth);
+    background: #f5f5f7;
+    cursor: pointer;
+}
+
+/* لما نضغط على الصورة أو تكون هي اللي معروضة */
+.mobile-thumb.active {
+    border-color: var(--primary-black); /* هيظهر إطار أحمر شيك حول الصورة النشطة */
+    transform: scale(1.05); /* تكبير بسيط جداً يعطي إيحاء بالتفاعل */
+}

@@ -10,14 +10,14 @@ class VideoController extends Controller
     public function videos()
     {
         // دي هتعرض صفحة الفيديوهات العادية
-        return view('admin.videos.vido');
+        return view('admin.videos.video');
     }
 
     // عرض الفيديوهات من الداتا بيز
     public function video()
     {
         $videos = Video::all();
-        return view('admin.videos.vido', compact('videos'));
+        return view('admin.videos.video', compact('videos'));
     }
 
     // صفحة إضافة فيديو
@@ -39,7 +39,7 @@ class VideoController extends Controller
             'youtube_url' => $request->youtube_url
         ]);
 
-        return redirect()->route('videos.vido')->with('success', '✅ تمت إضافة الفيديو بنجاح');
+        return redirect()->route('videos.video')->with('success', '✅ تمت إضافة الفيديو بنجاح');
     }
     public function destroy($id)
 {

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Complaint; // نضيف الموديل
+use Illuminate\Support\Facades\Auth;
+use App\Models\Complaint;
+use App\Notifications\NewComplaint;
 
 class ContactController extends Controller
 {
@@ -14,7 +16,6 @@ class ContactController extends Controller
 
     public function send(Request $request)
     {
-        // التحقق من صحة البيانات
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email',
@@ -22,15 +23,19 @@ class ContactController extends Controller
             'message' => 'required|string',
         ]);
 
-        // حفظ البيانات في قاعدة البيانات
-        Complaint::create([
+        $complaint = Complaint::create([
             'name' => $request->name,
             'email' => $request->email,
             'subject' => $request->subject,
             'message' => $request->message,
         ]);
 
-        // رسالة نجاح
+        // إشعار الأدمن المسجل دخوله
+        $admin = Auth::guard('admin')->user();
+        if ($admin) {
+            $admin->notify(new NewComplaint($complaint));
+        }
+
         return redirect()->route('contact.index')->with('success', '✅ تم إرسال رسالتك بنجاح!');
     }
 }

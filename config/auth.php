@@ -18,10 +18,10 @@ return [
     |--------------------------------------------------------------------------
     */
     'guards' => [
-        // الأدمن (يستخدم جدول users)
+        // الأدمن (يستخدم جدول employees)
         'admin' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'employees',
         ],
 
         // العملاء
@@ -30,7 +30,7 @@ return [
             'provider' => 'customers',
         ],
 
-        // الافتراضي (لو احتجته)
+        // الافتراضي
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
@@ -43,16 +43,22 @@ return [
     |--------------------------------------------------------------------------
     */
     'providers' => [
-        // جدول الأدمن (users)
-        'users' => [
+        // جدول الأدمن (employees)
+        'employees' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Employee::class,
         ],
 
         // جدول العملاء
         'customers' => [
             'driver' => 'eloquent',
             'model' => App\Models\Customer::class,
+        ],
+
+        // جدول اليوزرز العام
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
         ],
     ],
 

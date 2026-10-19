@@ -9,18 +9,26 @@ use App\Models\Cart;
 class CheckoutController extends Controller
 {
     public function index()
-    {
-        $customerId = Auth::guard('customer')->id();
+{
+    $customerId = Auth::guard('customer')->id();
 
-        $cartItems = Cart::where('customer_id', $customerId)
-            ->with('product')
-            ->get();
+    $cartItems = Cart::where('customer_id', $customerId)
+        ->with('product')
+        ->get();
 
-        $total = $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
+    $subtotal = $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
 
-        return view('show.auth.checkout', compact('cartItems', 'total'));
-    }
+    $shipping = 50; // قيمة الشحن (غيرها زي ما تحب)
 
+    $total = $subtotal + $shipping;
+
+    return view('show.auth.checkout', compact(
+        'cartItems',
+        'subtotal',
+        'shipping',
+        'total'
+    ));
+}
     public function store(Request $request)
     {
         return redirect()->route('show.products.index')->with('success', 'تم إتمام الطلب بنجاح ✅');
