@@ -53,7 +53,7 @@ A complete e-commerce web application built with **Laravel**, **PHP**, **MySQL**
 
 **Ahmed Yasser** - Full Stack Web Developer  
 📧 ay603877ea@gmail.com  
-🔗 [GitHub](https://github.com/ay6038776-collab)
+
 
 ---
 
